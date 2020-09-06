@@ -2,9 +2,9 @@
 
 import {useState, useEffect} from 'react';
 
-function useNetworkState(): [boolean, Date | null] {
+function useNetworkState(): [boolean, ?Date] {
   const [isOnline, setOnline] = useState<boolean>(navigator.onLine);
-  const [connectedAt, setConnectedAt] = useState<Date | null>(null);
+  const [connectedAt, setConnectedAt] = useState<?Date>(undefined);
 
   useEffect(() => {
     function listenOnline() {
@@ -14,7 +14,7 @@ function useNetworkState(): [boolean, Date | null] {
 
     function listenOffline() {
       setOnline(false);
-      setConnectedAt(null);
+      setConnectedAt(undefined);
     }
 
     window.addEventListener('online', listenOnline);
