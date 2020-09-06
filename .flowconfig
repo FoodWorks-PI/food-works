@@ -5,6 +5,7 @@
 [include]
 
 [libs]
+flow-typed
 
 [lints]
 
@@ -18,3 +19,4 @@ unsafe-getters-setters
 untyped-import
 untyped-type-import
 sketchy-null
+deprecated-type
