@@ -26,13 +26,13 @@
     "flow-typed": "flow-typed"
   },
   "lint-staged": {
-    "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
+    "src/**/*.{js,json,css,scss,md}": [
       "prettier --write"
     ]
   },
   "husky": {
     "hooks": {
-      "pre-commit": "lint-staged"
+      "pre-commit": "npm run flow check && lint-staged"
     }
   },
   "eslintConfig": {
