@@ -1,10 +1,10 @@
 // @flow strict
 
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import logo from 'logo.svg';
+import 'App.css';
 import {useState} from 'react';
-import useNetworkState from './hooks/useNetworkState';
+import useNetworkState from 'hooks/useNetworkState';
 
 function App() {
   const [isOnline, connectedAt] = useNetworkState();
