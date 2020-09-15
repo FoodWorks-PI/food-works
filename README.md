@@ -1,5 +1,7 @@
 # Customer Front End Application
 
+Hey
+
 ## Available Scripts
 
 In the project directory, you can run:
