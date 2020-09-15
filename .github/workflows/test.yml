@@ -36,7 +36,7 @@ jobs:
     - name: Build
       run: npm run build --if-present
     - name: Static check
-      run: npm run flow check && lint-staged
+      run: npm run flow check
       env:
         CI: true
 
