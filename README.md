@@ -1,6 +1,6 @@
 # Customer Front End Application
 
-Hey Jude
+Hey
 
 ## Available Scripts
 
