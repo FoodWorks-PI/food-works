@@ -1,6 +1,5 @@
 # Customer Front End Application
 
-Hey
 
 ## Available Scripts
 
