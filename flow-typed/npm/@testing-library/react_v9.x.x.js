@@ -1,4 +1,4 @@
-// flow-typed signature: 38ccc5bbcbb54d21f37adca5cc3ed7a1
+// flow-typed signature: f1b29098a86d31247e26f078a0706231
 // flow-typed version: 0b0eb4afe9/@testing-library/react_v9.x.x/flow_>=v0.104.x
 
 declare module '@testing-library/react' {

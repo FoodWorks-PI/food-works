@@ -1,4 +1,4 @@
-// flow-typed signature: 2b0527816b2a1d32ff43775789595b02
+// flow-typed signature: c25131f72bbaabb1acb189223cee05af
 // flow-typed version: c6154227d1/@testing-library/jest-dom_v4.x.x/flow_>=v0.104.x
 
 declare module '@testing-library/jest-dom' {
