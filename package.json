@@ -27,7 +27,8 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "flow": "flow",
-    "flow-typed": "flow-typed"
+    "flow-typed": "flow-typed",
+    "start:local": "PORT=4535 && npm start"
   },
   "lint-staged": {
     "src/**/*.{js,json,css,scss,md}": [
