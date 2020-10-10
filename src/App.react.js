@@ -13,7 +13,7 @@ function App() {
       <CssBaseline />
       <Router>
         <Switch>
-          <Route path="/sign-in">
+          <Route path="/customer/public">
             <SignInPage name="Alfredo" />
           </Route>
         </Switch>
