@@ -67,7 +67,7 @@ function App() {
   function PublicDemo() {
     return (
       <div>
-        <a href="https://127.0.0.1:4455/auth/registration?clientApp=https://127.0.1:4455:/customer/protected">
+        <a href="https://127.0.0.1:4455/auth/registration?clientApp=https://127.0.0.1:4455/customer/protected">
           Register
         </a>
         <a href="https://127.0.0.1:4455/auth/login?clientApp=https://127.0.0.1:4455/customer/protected">
