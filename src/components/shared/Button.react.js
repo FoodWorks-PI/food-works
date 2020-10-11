@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     background: 'none',
     backgroundColor: '#7ea8ef',
     color: '#fff',
-    lineHeight: 1,
+    lineHeight: 1.42858,
     border: 'none',
     borderRadius: 6,
     display: 'flex',
@@ -19,7 +19,7 @@ const useStyles = makeStyles({
     paddingRight: 16,
     paddingBottom: 8,
     paddingTop: 8,
-    fontWeight: 'bold',
+    fontWeight: 700,
     fontSize: 14,
     textAlign: 'center',
     justifyContent: 'center',
@@ -33,7 +33,7 @@ const useStyles = makeStyles({
 type Props = $ReadOnly<{
   onClick: (e: SyntheticMouseEvent<>) => mixed,
   children: Node,
-  className?: string,
+  className?: ?string,
 }>;
 
 function Button(props: Props): Node {
