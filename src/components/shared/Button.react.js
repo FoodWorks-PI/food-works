@@ -8,18 +8,25 @@ import clsx from 'clsx';
 const useStyles = makeStyles({
   root: {
     background: 'none',
-    backgroundColor: '#7EA8EF',
+    backgroundColor: '#7ea8ef',
     color: '#fff',
     lineHeight: 1,
     border: 'none',
-    borderRadius: 8,
+    borderRadius: 6,
     display: 'flex',
     alignItems: 'center',
-    padding: 8,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingBottom: 8,
+    paddingTop: 8,
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 14,
     textAlign: 'center',
     justifyContent: 'center',
+    borderColor: 'rgb(0,0,0,0.4)',
+    '&:active': {
+      backgroundColor: '#6b9cef',
+    },
   },
 });
 
@@ -33,9 +40,13 @@ function Button(props: Props): Node {
   const classes = useStyles();
 
   return (
-    <button className={clsx(classes.root, props.className)} onClick={props.onClick}>
-      {props.children}
-    </button>
+    <div
+      className={clsx(classes.root, props.className)}
+      onClick={props.onClick}
+      role="button"
+    >
+      <span>{props.children}</span>
+    </div>
   );
 }
 

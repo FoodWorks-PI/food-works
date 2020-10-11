@@ -4,16 +4,10 @@ import React from 'react';
 import type {Node} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
-import FacebookLoginButton from 'components/shared/FacebookLoginButton.react';
 import Button from 'components/shared/Button.react';
 import FlexLayout from 'components/shared/FlexLayout.react';
 
 const useStyles = makeStyles({
-  root: {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-  },
   button: {
     width: '70%',
   },
@@ -28,9 +22,8 @@ function SignInPage(): Node {
   return (
     <FlexLayout>
       <Button className={classes.button} onClick={handleFacebookLogin}>
-        INGRESAR
+        Ingresar
       </Button>
-      <FacebookLoginButton className={classes.button} onClick={handleFacebookLogin} />
     </FlexLayout>
   );
 }

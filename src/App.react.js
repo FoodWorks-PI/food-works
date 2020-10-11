@@ -15,7 +15,7 @@ function App(): Node {
       <CssBaseline />
       <Router>
         <Switch>
-          <Route path="/customer/public">
+          <Route path="/customer/protected">
             <SignInPage name="Alfredo" />
           </Route>
         </Switch>
