@@ -20,6 +20,12 @@ const useStyles = makeStyles({
     alignSelf: 'center',
     marginBottom: 24,
   },
+  subtitle: {
+    marginBottom: 16,
+  },
+  field: {
+    marginBottom: 12,
+  },
 });
 
 export default function UserNameStep(): Node {
@@ -33,9 +39,15 @@ export default function UserNameStep(): Node {
       <Typography className={classes.title} color="primary" variant="h4" align="center">
         FOOD WORKS
       </Typography>
-      <Typography>Ingresa tu nombre</Typography>
-      <TextInput label="Nombre" placeholder="Nombres" />
-      <TextInput label="Apellido" placeholder="Apellidos" />
+      <Typography className={classes.subtitle}>Datos de usuario</Typography>
+      <TextInput className={classes.field} label="Nombre" placeholder="Nombres" />
+      <TextInput className={classes.field} label="Apellido" placeholder="Apellidos" />
+      <TextInput
+        className={classes.field}
+        label="Teléfono"
+        placeholder="10 digitos"
+        type="tel"
+      />
       <Button className={classes.button} onClick={handleFacebookLogin}>
         Continuar
       </Button>
