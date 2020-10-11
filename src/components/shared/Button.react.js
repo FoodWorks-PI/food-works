@@ -23,11 +23,11 @@ const useStyles = makeStyles({
   },
 });
 
-type Props = {
+type Props = $ReadOnly<{
   onClick: (e: SyntheticMouseEvent<>) => mixed,
   children: Node,
   className?: string,
-};
+}>;
 
 function Button(props: Props): Node {
   const classes = useStyles();

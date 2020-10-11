@@ -31,10 +31,10 @@ const useStyles = makeStyles({
   },
 });
 
-type Props = {
+type Props = $ReadOnly<{
   onClick: (e: SyntheticMouseEvent<>) => mixed,
   className?: string,
-};
+}>;
 
 function FacebookLoginButton(props: Props): Node {
   const classes = useStyles();

@@ -6,6 +6,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 import FacebookLoginButton from 'components/shared/FacebookLoginButton.react';
 import Button from 'components/shared/Button.react';
+import FlexLayout from 'components/shared/FlexLayout.react';
 
 const useStyles = makeStyles({
   root: {
@@ -25,12 +26,12 @@ function SignInPage(): Node {
   }
 
   return (
-    <div className={classes.root}>
+    <FlexLayout>
       <Button className={classes.button} onClick={handleFacebookLogin}>
         INGRESAR
       </Button>
       <FacebookLoginButton className={classes.button} onClick={handleFacebookLogin} />
-    </div>
+    </FlexLayout>
   );
 }
 
