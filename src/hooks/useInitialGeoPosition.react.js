@@ -35,7 +35,7 @@ export default function useInitialGeoPosition(): [?Position, ?PositionError, boo
     }
 
     fetchLocation();
-  }, [setError, setPosition]);
+  }, [setError, setPosition, setFetching]);
 
   return [position, error, isFetching];
 }
