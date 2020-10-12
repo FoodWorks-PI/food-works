@@ -67,7 +67,7 @@ export default function TextInput({
             <Typography variant="subtitle2">{label}</Typography>
           </label>
           {errorMessage !== null ? (
-            <Typography color="error" variant="subtitle2">
+            <Typography color="error" variant="body2">
               {errorMessage}
             </Typography>
           ) : null}
