@@ -7,7 +7,7 @@ import clsx from 'clsx';
 import FlexLayout from 'components/shared/FlexLayout.react';
 import Typography from '@material-ui/core/Typography';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
   },
@@ -30,9 +30,10 @@ const useStyles = makeStyles({
     margin: 0,
     outline: 'none',
     textOverflow: 'ellipsis',
+    fontFamily: theme.typography.fontFamily,
     fontSize: 14,
   },
-});
+}));
 
 type TextInputType = 'text' | 'password' | 'email' | 'tel' | 'search';
 
