@@ -42,7 +42,7 @@ type Props = $ReadOnly<{
   inputId?: string,
   label: string,
   errorMessage?: ?string,
-  onChange?: (e: SyntheticKeyboardEvent<>) => mixed,
+  onChange?: (e: SyntheticInputEvent<>) => mixed,
   placeholder?: ?string,
   type?: TextInputType,
   value?: ?string,
