@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
   button: {
     width: '100%',
+    marginTop: 12,
   },
   title: {
     alignSelf: 'center',
