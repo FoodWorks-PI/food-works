@@ -5,6 +5,7 @@ import type {Node} from 'react';
 import React from 'react';
 import {useState, useCallback} from 'react';
 import {GoogleMap} from '@react-google-maps/api';
+import {searchAutocomplete} from 'services/GoogleAPI';
 
 const containerStyle = {
   width: '100wh',
@@ -22,6 +23,9 @@ export default function UserLocationStep(): Node {
   // Deliberately not using useCallback, this is only called once
   function onLoad(mapInstance) {
     setMap(mapInstance);
+    searchAutocomplete('polanco', '133').then((results) => {
+      console.log(results);
+    });
   }
 
   const onIdle = useCallback(() => {

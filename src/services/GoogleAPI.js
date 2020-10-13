@@ -4,7 +4,7 @@ import type {PlaceDetailed, PlacePrediction} from 'constants/GoogleAPITypes';
 
 import GoogleAPIError from 'utils/GoogleAPIError';
 
-const BASE_URL = 'http://blackholes.herokuapp.com';
+const BASE_URL = 'https://blackholes.herokuapp.com';
 
 function getGoogleAPI<T>(url: URL): Promise<T> {
   return fetch(url)
