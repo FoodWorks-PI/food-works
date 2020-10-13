@@ -34,7 +34,7 @@ export function searchAutocomplete(
   fetchUrl.searchParams.append('input', input);
   fetchUrl.searchParams.append('sessiontoken', sessiontoken);
   fetchUrl.searchParams.append('components', 'country:mx');
-  return getGoogleAPI(fetchUrl);
+  return getGoogleAPI<Array<PlacePrediction>>(fetchUrl);
 }
 
 export function placeDetails(
@@ -44,12 +44,12 @@ export function placeDetails(
   const fetchUrl = new URL(`${BASE_URL}/place/details`);
   fetchUrl.searchParams.append('place_id', placeId);
   fetchUrl.searchParams.append('sessiontoken', sessiontoken);
-  return getGoogleAPI(fetchUrl);
+  return getGoogleAPI<PlaceDetailed>(fetchUrl);
 }
 
 export function geocodeReverse(lat: string, lon: string): Promise<Array<PlaceDetailed>> {
   const fetchUrl = new URL(`${BASE_URL}/goecode/reverse`);
   fetchUrl.searchParams.append('lat', lat);
   fetchUrl.searchParams.append('lon', lon);
-  return getGoogleAPI(fetchUrl);
+  return getGoogleAPI<Array<PlaceDetailed>>(fetchUrl);
 }
