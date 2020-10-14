@@ -1,4 +1,4 @@
-// @flow strict
+// @flow
 
 import type {Node} from 'react';
 
@@ -8,20 +8,24 @@ import {ThemeProvider, CssBaseline} from '@material-ui/core';
 import {LoadScript} from '@react-google-maps/api';
 import UserLocationStep from 'components/user_creation/UserLocationStep.react';
 import {theme} from 'shared/theme';
+import {StoreContext} from 'stores/hooks/CustomerStoreHooks';
+import CustomerStore from 'stores/CustomerStore';
 
 function App(): Node {
   return (
     <LoadScript googleMapsApiKey={process.env.REACT_APP_MAPS_KEY}>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Router>
-          <Switch>
-            <Route path="/customer/protected">
-              <UserLocationStep />
-            </Route>
-          </Switch>
-        </Router>
-      </ThemeProvider>
+      <StoreContext.Provider value={CustomerStore}>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          <Router>
+            <Switch>
+              <Route path="/customer/protected">
+                <UserLocationStep />
+              </Route>
+            </Switch>
+          </Router>
+        </ThemeProvider>
+      </StoreContext.Provider>
     </LoadScript>
   );
 }
