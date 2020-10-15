@@ -1,6 +1,5 @@
 // @flow strict
 
-import type GoogleAPIError from 'utils/GoogleAPIError';
 import type {PlaceDetailed} from 'constants/GoogleAPITypes';
 
 import keyMirror from 'utils/keyMirror';
@@ -17,7 +16,6 @@ export type CustomerSelectedPlaceAction = $ReadOnly<
     }
   | {
       type: typeof ActionTypes.FETCH_SELECTED_PLACE_ERROR,
-      payload: GoogleAPIError,
     }
   | {
       type: typeof ActionTypes.FETCH_SELECTED_PLACE_SUCCESS,
