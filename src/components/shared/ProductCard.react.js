@@ -15,14 +15,15 @@ const useStyles = makeStyles({
     flex: '0 0 75.000%',
     margin: '0px 5px 0px 5px',
   },
-  img: {
+  img: (props) => ({
     width: '100%',
     height: '90px',
     objectFit: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
     backgroundSize: '100%',
-  },
+    backgroundImage: `url(${props.product.img})`,
+  }),
   title: {
     color: 'white',
     fontWeight: 'bold',
@@ -64,13 +65,12 @@ type Props = {
 };
 
 function ProductCard({product}: Props): Node {
-  const classes = useStyles();
-  const imgStyle = {backgroundImage: `url(${product.img})`};
+  const classes = useStyles({product});
 
   return (
     <Paper elevation={3} className={classes.root} square>
       <FlexLayout direction="vertical" justify="center">
-        <FlexLayout className={classes.img} style={imgStyle} direction="vertical">
+        <FlexLayout className={classes.img} direction="vertical">
           <FlexLayout className={classes.chipRow} justify="end">
             <Chip
               size="small"

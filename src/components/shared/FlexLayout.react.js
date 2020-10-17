@@ -74,7 +74,6 @@ type Props = $ReadOnly<{
   direction?: Direction,
   justify?: Justify,
   wrap?: Wrap,
-  style?: ?{},
 }>;
 
 export default function FlexLayout({
@@ -83,7 +82,6 @@ export default function FlexLayout({
   className,
   direction = 'horizontal',
   justify = 'start',
-  style,
   wrap = 'nowrap',
 }: Props): Node {
   const classes = useStyles();
@@ -109,7 +107,6 @@ export default function FlexLayout({
         [classes.wrap]: wrap === 'wrap',
         [classes.wrapReverse]: wrap === 'wrap-reverse',
       })}
-      style={style}
     >
       {children}
     </div>
