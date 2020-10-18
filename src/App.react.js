@@ -9,6 +9,8 @@ import {theme} from 'shared/theme';
 
 import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
 import HomePage from 'components/home/HomePage.react';
+import AccountPage from 'components/account/AccountPage.react';
+import AccountDetails from 'components/account/AccountDetails.react';
 
 function Search() {
   return <h1>BUSCAR</h1>;
@@ -33,7 +35,10 @@ function App() {
             <Search />
           </Route>
           <Route path="/customer/account">
-            <Search />
+            <AccountPage />
+          </Route>
+          <Route path="/customer/profile">
+            <AccountDetails />
           </Route>
         </Switch>
         <BottomNavigationBar />
