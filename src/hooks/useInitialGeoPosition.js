@@ -2,7 +2,7 @@
 
 import {useState, useEffect} from 'react';
 
-function load(positionOptions?: PositionOptions): Promise<Position> {
+export function load(positionOptions?: PositionOptions): Promise<Position> {
   return new Promise((resolve, reject) =>
     navigator.geolocation.getCurrentPosition(
       (position) => {

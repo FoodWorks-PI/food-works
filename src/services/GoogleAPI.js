@@ -48,7 +48,7 @@ export function placeDetails(
 }
 
 export function geocodeReverse(lat: string, lon: string): Promise<Array<PlaceDetailed>> {
-  const fetchUrl = new URL(`${BASE_URL}/goecode/reverse`);
+  const fetchUrl = new URL(`${BASE_URL}/geocode/reverse`);
   fetchUrl.searchParams.append('lat', lat);
   fetchUrl.searchParams.append('lon', lon);
   return getGoogleAPI<Array<PlaceDetailed>>(fetchUrl);

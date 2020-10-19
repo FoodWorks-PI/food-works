@@ -10,7 +10,7 @@ import FlexLayout from 'components/shared/FlexLayout.react';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
-import PlacesAutocompleteSearch from 'components/places_autocomplete/PlacesAutocompleteSearch.react';
+import PlacesAutocompleteSearch from 'components/places/PlacesAutocompleteSearch.react';
 
 const useStyles = makeStyles({
   top: {

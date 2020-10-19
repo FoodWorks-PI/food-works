@@ -23,6 +23,7 @@ const useStyles = makeStyles({
     marginBottom: 24,
   },
   subtitle: {
+    alignSelf: 'center',
     marginBottom: 16,
   },
   field: {
@@ -41,7 +42,9 @@ export default function UserNameStep(): Node {
       <Typography className={classes.title} color="primary" variant="h4" align="center">
         FOOD WORKS
       </Typography>
-      <Typography className={classes.subtitle}>Datos de usuario</Typography>
+      <Typography className={classes.subtitle} variant="h6" align="center">
+        Datos de usuario
+      </Typography>
       <TextInput className={classes.field} label="Nombre" placeholder="Nombres" />
       <TextInput className={classes.field} label="Apellido" placeholder="Apellidos" />
       <TextInput
