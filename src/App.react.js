@@ -7,7 +7,6 @@ import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 import {ThemeProvider, CssBaseline} from '@material-ui/core';
 import {LoadScript} from '@react-google-maps/api';
 import UserLocationStep from 'components/user_creation/UserLocationStep.react';
-import UserNameStep from 'components/user_creation/UserNameStep.react';
 import {theme} from 'shared/theme';
 import {StoreContext} from 'stores/hooks/CustomerStoreHooks';
 import CustomerStore from 'stores/CustomerStore';
