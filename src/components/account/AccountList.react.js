@@ -13,6 +13,7 @@ import {
 } from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 import {Favorite, Help, Payment, Settings, ChevronRight} from '@material-ui/icons';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
@@ -25,8 +26,8 @@ function AccountList(): Node {
   const classes = useStyles();
 
   return (
-    <List className={classes.root}>
-      <ListItem button>
+    <List className={classes.root} component="nav">
+      <ListItem button to="/customer/account/favorites" component={Link}>
         <ListItemIcon>
           <Favorite />
         </ListItemIcon>
@@ -36,7 +37,7 @@ function AccountList(): Node {
         </ListItemSecondaryAction>
       </ListItem>
       <Divider />
-      <ListItem button divider>
+      <ListItem button divider to="/customer/account/payments" component={Link}>
         <ListItemIcon>
           <Payment />
         </ListItemIcon>

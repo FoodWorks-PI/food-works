@@ -29,7 +29,7 @@ function AccountPage(): Node {
       <Typography variant="h4" gutterBottom align="center">
         Juan Perez
       </Typography>
-      <TextLink to="/customer/profile">Editar mi cuenta</TextLink>
+      <TextLink to="/customer/account/profile">Editar mi cuenta</TextLink>
       <AccountList />
     </FlexLayout>
   );

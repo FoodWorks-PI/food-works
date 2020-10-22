@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  DialogContentText,
   DialogActions,
   Slide,
 } from '@material-ui/core';
@@ -29,13 +28,13 @@ function AccountEditDialog({open, setOpen, field, data}: Props): Node {
   function getFieldDescription() {
     switch (field) {
       case 'name':
-        return 'nombre';
+        return 'Nombre';
       case 'lastName':
-        return 'apellido';
+        return 'Apellido';
       case 'email':
-        return 'correo electrónico';
+        return 'Correo electrónico';
       case 'phone':
-        return 'número de telefono';
+        return 'Número de telefono';
       default:
         return 'dato';
     }
@@ -49,13 +48,9 @@ function AccountEditDialog({open, setOpen, field, data}: Props): Node {
       fullWidth
       onClose={setOpen}
       aria-labelledby="dialog-edit-account"
-      aria-describedby="dialog-edit-account-description"
     >
       <DialogTitle id="dialog-edit-account">Editar datos</DialogTitle>
       <DialogContent>
-        <DialogContentText id="dialog-edit-account-description">
-          Ingresa un nuevo {getFieldDescription()}
-        </DialogContentText>
         <TextInput placeholder={data} name={field} label={getFieldDescription()} />
       </DialogContent>
       <DialogActions style={{justifyContent: 'center'}}>

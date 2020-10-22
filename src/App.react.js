@@ -11,6 +11,9 @@ import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
 import HomePage from 'components/home/HomePage.react';
 import AccountPage from 'components/account/AccountPage.react';
 import AccountDetails from 'components/account/AccountDetails.react';
+import AccountFavorites from 'components/account/AccountFavorites.react';
+import AccountPayments from 'components/account/AccountPayments.react';
+import CardDetail from 'components/payment/CardDetail.react';
 
 function Search() {
   return <h1>BUSCAR</h1>;
@@ -34,11 +37,20 @@ function App() {
           <Route path="/customer/orders">
             <Search />
           </Route>
-          <Route path="/customer/account">
+          <Route exact path="/customer/account">
             <AccountPage />
           </Route>
-          <Route path="/customer/profile">
+          <Route path="/customer/account/profile">
             <AccountDetails />
+          </Route>
+          <Route path="/customer/account/favorites">
+            <AccountFavorites />
+          </Route>
+          <Route exact path="/customer/account/payments">
+            <AccountPayments />
+          </Route>
+          <Route path="/customer/account/payments/:cardType">
+            <CardDetail />
           </Route>
         </Switch>
         <BottomNavigationBar />
