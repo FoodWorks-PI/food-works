@@ -17,6 +17,15 @@ import ButtonBase from '@material-ui/core/ButtonBase';
 import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from 'components/shared/Button.react';
+import {gql, useMutation} from '@apollo/client';
+import {useHistory} from 'react-router-dom';
+import * as ROUTES from 'constants/Routes';
+
+const CREATE_USER = gql`
+  mutation CreateUser($input: RegisterCustomerInput!) {
+    createCustomerProfile(input: $input)
+  }
+`;
 
 const barHeight = 104;
 
@@ -80,13 +89,20 @@ const useStyles = makeStyles({
 });
 
 export default function UserLocationStep(): Node {
+  const history = useHistory();
   const selectedPlaceState = useMappedState((state) => state.selectedPlace);
   const customerCreationState = useMappedState((state) => state.customerCreation);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [map, setMap] = useState(null);
   const [userPosition] = useInitialGeoPosition();
-  const [loadingCreation, setLoadingCreation] = useState(false);
+  const [createUser, {loading: loadingCreation}] = useMutation(CREATE_USER, {
+    onCompleted() {
+      history.replace({
+        pathname: ROUTES.PROTECTED_ROOT,
+      });
+    },
+  });
 
   useEffect(() => {
     if (userPosition) {
@@ -121,7 +137,20 @@ export default function UserLocationStep(): Node {
       !selectedPlaceState.hasError &&
       selectedPlaceState.place
     ) {
-      setLoadingCreation(true);
+      createUser({
+        variables: {
+          input: {
+            name: customerCreationState.creation.name,
+            lastName: customerCreationState.creation.lastName,
+            phone: customerCreationState.creation.phoneNumber,
+            address: {
+              latitude: selectedPlaceState.place.geometry.location.lat,
+              longitude: selectedPlaceState.place.geometry.location.lng,
+              streetLine: selectedPlaceState.place.formatted_address,
+            },
+          },
+        },
+      });
     }
   }
 
