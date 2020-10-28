@@ -24,6 +24,7 @@
     "react-dom": "^16.13.1",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-swipeable-views": "^0.13.9",
     "redux": "^4.0.5",
     "redux-react-hook": "^4.0.3",
     "redux-thunk": "^2.3.0",
