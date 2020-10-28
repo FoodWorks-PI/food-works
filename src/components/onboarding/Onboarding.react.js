@@ -90,7 +90,7 @@ export default function Onboarding() {
   }
 
   function handleStart() {
-    window.open(SIGN_UP_URL);
+    window.open(SIGN_UP_URL, '_self');
   }
 
   return (
