@@ -11,35 +11,35 @@ type Props = $ReadOnly<{
   fallback: React.Node,
 }>;
 
+type State = {
+  loading: boolean,
+  hasError: boolean,
+};
+
 export default function KratosNoSessionRenderer({
   children,
   fallback,
 }: Props): React.Node {
-  const [loading, setLoading] = useState(true);
-  const [hasError, setHasError] = useState(false);
-  const [receivedAt, setReceivedAt] = useState<?number>(null);
+  const [state, setState] = useState<State>({loading: true, hasError: false});
 
   useEffect(() => {
     async function checkSession() {
       try {
         await kratos.whoami();
-        setLoading(false);
-        setReceivedAt(Date.now());
+        setState({loading: false, hasError: false});
       } catch {
-        setLoading(false);
-        setHasError(true);
-        setReceivedAt(Date.now());
+        setState({loading: false, hasError: true});
       }
     }
 
     checkSession();
-  }, [setHasError, setLoading, setReceivedAt]);
+  }, [setState]);
 
-  if (loading) {
+  if (state.loading) {
     return fallback;
   }
 
-  if (!loading && !hasError && receivedAt !== null) {
+  if (!state.loading && !state.hasError) {
     return <Redirect to={ROUTES.PROTECTED_ROOT} />;
   }
 
