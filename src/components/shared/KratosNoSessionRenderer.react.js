@@ -1,8 +1,9 @@
 // @flow strict
-import * as React from 'react';
-import {Redirect} from 'react-router-dom';
-import {gql, useQuery} from '@apollo/client';
 
+import * as React from 'react';
+import {useEffect, useState} from 'react';
+import {Redirect} from 'react-router-dom';
+import {kratos} from 'services/Kratos';
 import * as ROUTES from 'constants/Routes';
 
 type Props = $ReadOnly<{
@@ -10,24 +11,36 @@ type Props = $ReadOnly<{
   fallback: React.Node,
 }>;
 
-const GET_CURRENT_CUSTOMER = gql`
-  query GetCurrentCustomer {
-    getCurrentCustomer {
-      ID
-    }
-  }
-`;
+export default function KratosNoSessionRenderer({
+  children,
+  fallback,
+}: Props): React.Node {
+  const [loading, setLoading] = useState(true);
+  const [hasError, setHasError] = useState(false);
+  const [receivedAt, setReceivedAt] = useState<?number>(null);
 
-// To be used under ROUTES.PROTECTED_ROOT
-export default function UserExistsRenderer({children, fallback}: Props): React.Node {
-  const {loading, error} = useQuery(GET_CURRENT_CUSTOMER);
+  useEffect(() => {
+    async function checkSession() {
+      try {
+        await kratos.whoami();
+        setLoading(false);
+        setReceivedAt(Date.now());
+      } catch {
+        setLoading(false);
+        setHasError(true);
+        setReceivedAt(Date.now());
+      }
+    }
+
+    checkSession();
+  }, [setHasError, setLoading, setReceivedAt]);
 
   if (loading) {
     return fallback;
   }
 
-  if (error) {
-    return <Redirect to={ROUTES.CREATE_ONE} />;
+  if (!loading && !hasError && receivedAt !== null) {
+    return <Redirect to={ROUTES.PROTECTED_ROOT} />;
   }
 
   return children;

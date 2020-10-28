@@ -13,6 +13,7 @@ import {ApolloProvider} from '@apollo/client';
 import {client} from 'services/Apollo';
 import * as ROUTES from 'constants/Routes';
 import Onboarding from 'components/onboarding/Onboarding.react';
+import KratosNoSessionRenderer from 'components/shared/KratosNoSessionRenderer.react';
 
 function App(): React.Node {
   return (
@@ -24,7 +25,9 @@ function App(): React.Node {
             <Router>
               <Switch>
                 <Route exact path={ROUTES.PUBLIC_ROOT}>
-                  <Onboarding />
+                  <KratosNoSessionRenderer fallback={<p>Loading...</p>}>
+                    <Onboarding />
+                  </KratosNoSessionRenderer>
                 </Route>
                 <Route exact path={ROUTES.PROTECTED_ROOT}>
                   {/* TODO: Write a more user friendly fallback */}

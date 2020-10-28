@@ -1,4 +1,5 @@
 // @flow strict
+
 import * as React from 'react';
 import {Redirect} from 'react-router-dom';
 import {gql, useQuery} from '@apollo/client';
