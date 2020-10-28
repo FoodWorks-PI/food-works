@@ -9,11 +9,13 @@ import {StoreContext} from 'stores/hooks/CustomerStoreHooks';
 import CustomerStore from 'stores/CustomerStore';
 import UserExistsRenderer from 'components/shared/UserExistsRenderer.react';
 import UserNameStep from 'components/user_creation/UserNameStep.react';
+import UserLocationStep from 'components/user_creation/UserLocationStep.react';
 import {ApolloProvider} from '@apollo/client';
 import {client} from 'services/Apollo';
 import * as ROUTES from 'constants/Routes';
 import Onboarding from 'components/onboarding/Onboarding.react';
 import KratosNoSessionRenderer from 'components/shared/KratosNoSessionRenderer.react';
+import PlacesAutocompletePage from 'components/places/PlacesAutocompletePage.react';
 
 function App(): React.Node {
   return (
@@ -37,6 +39,12 @@ function App(): React.Node {
                 </Route>
                 <Route exact path={ROUTES.CREATE_ONE}>
                   <UserNameStep />
+                </Route>
+                <Route exact path={ROUTES.CREATE_TWO}>
+                  <UserLocationStep />
+                </Route>
+                <Route exact path={ROUTES.AUTOCOMPLETE_SEARCH}>
+                  <PlacesAutocompletePage />
                 </Route>
               </Switch>
             </Router>

@@ -81,6 +81,7 @@ const useStyles = makeStyles({
 
 export default function UserLocationStep(): Node {
   const selectedPlaceState = useMappedState((state) => state.selectedPlace);
+  const customerCreationState = useMappedState((state) => state.customerCreation);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [map, setMap] = useState(null);
@@ -112,7 +113,16 @@ export default function UserLocationStep(): Node {
   }, [map, dispatch]);
 
   function onReadyClick() {
-    setLoadingCreation(true);
+    if (customerCreationState.creation == null) {
+      return;
+    }
+    if (
+      !selectedPlaceState.isFetching &&
+      !selectedPlaceState.hasError &&
+      selectedPlaceState.place
+    ) {
+      setLoadingCreation(true);
+    }
   }
 
   return (
