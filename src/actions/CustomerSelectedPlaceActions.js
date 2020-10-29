@@ -1,6 +1,7 @@
 // @flow
 
 import type {Dispatch, ThunkAction, ThunkGetState} from 'constants/CustomerActionTypes';
+import type {PlaceDetailed} from 'constants/GoogleAPITypes';
 
 import {placeDetails, geocodeReverse} from 'services/GoogleAPI';
 import CustomerSelectedPlaceActionTypes from 'actions/CustomerSelectedPlaceActionTypes';
@@ -8,6 +9,7 @@ import CustomerSelectedPlaceActionTypes from 'actions/CustomerSelectedPlaceActio
 export function loadPlaceFromDetails(
   placeId: string,
   sessiontoken: string,
+  onSuccess: (PlaceDetailed) => void = () => {},
 ): ThunkAction {
   return (dispatch: Dispatch, getState: ThunkGetState) => {
     if (getState().selectedPlace.isFetching) {
@@ -16,12 +18,13 @@ export function loadPlaceFromDetails(
     dispatch({type: CustomerSelectedPlaceActionTypes.FETCH_SELECTED_PLACE_REQUEST});
 
     return placeDetails(placeId, sessiontoken)
-      .then((place) =>
+      .then((place) => {
         dispatch({
           type: CustomerSelectedPlaceActionTypes.FETCH_SELECTED_PLACE_SUCCESS,
           payload: place,
-        }),
-      )
+        });
+        onSuccess(place);
+      })
       .catch((error) =>
         dispatch({
           type: CustomerSelectedPlaceActionTypes.FETCH_SELECTED_PLACE_ERROR,

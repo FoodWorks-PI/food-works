@@ -18,7 +18,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import LocationOnIcon from '@material-ui/icons/LocationOn';
 import Button from 'components/shared/Button.react';
 import {gql, useMutation} from '@apollo/client';
-import {useHistory} from 'react-router-dom';
+import {useHistory, useLocation} from 'react-router-dom';
 import * as ROUTES from 'constants/Routes';
 
 const CREATE_USER = gql`
@@ -90,6 +90,7 @@ const useStyles = makeStyles({
 
 export default function UserLocationStep(): Node {
   const history = useHistory();
+  const location = useLocation();
   const selectedPlaceState = useMappedState((state) => state.selectedPlace);
   const customerCreationState = useMappedState((state) => state.customerCreation);
   const dispatch = useDispatch();
@@ -98,22 +99,31 @@ export default function UserLocationStep(): Node {
   const [userPosition] = useInitialGeoPosition();
   const [createUser, {loading: loadingCreation}] = useMutation(CREATE_USER, {
     onCompleted() {
+      // TODO: Replace entire history stack
       history.replace({
         pathname: ROUTES.PROTECTED_ROOT,
       });
     },
   });
 
+  const initialLat = new URLSearchParams(location.search).get('initial_lat');
+  const initialLon = new URLSearchParams(location.search).get('initial_lon');
+
   useEffect(() => {
-    if (userPosition) {
+    if (initialLat != null && initialLon != null) {
+      const lat = Number.parseFloat(initialLat);
+      const lon = Number.parseFloat(initialLon);
+      if (map !== null) {
+        map.setCenter({lat, lng: lon});
+      }
+    } else if (userPosition) {
       const lat = userPosition.coords.latitude;
       const lon = userPosition.coords.longitude;
-      dispatch(loadPlaceFromReverse(lat.toString(), lon.toString()));
       if (map !== null) {
         map.setCenter({lat, lng: lon});
       }
     }
-  }, [userPosition, dispatch, map]);
+  }, [userPosition, map, initialLat, initialLon]);
 
   // Deliberately not using useCallback, this is only called once
   function onLoad(mapInstance) {
@@ -154,6 +164,12 @@ export default function UserLocationStep(): Node {
     }
   }
 
+  function onAutocomplete() {
+    history.push({
+      pathname: ROUTES.AUTOCOMPLETE_SEARCH,
+    });
+  }
+
   return (
     <FlexLayout className={classes.root} direction="vertical">
       <Paper elevation={4} square className={classes.address}>
@@ -189,7 +205,7 @@ export default function UserLocationStep(): Node {
           color="primary"
           fontSize="large"
         />
-        <ButtonBase className={classes.buttonToAutocomplete}>
+        <ButtonBase onClick={onAutocomplete} className={classes.buttonToAutocomplete}>
           <Paper className={classes.searchCard} elevation={4}>
             <FlexLayout align="center">
               <SearchIcon className={classes.searchIcon} />

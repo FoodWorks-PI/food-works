@@ -14,6 +14,8 @@ import ListItemText from '@material-ui/core/ListItemText';
 import PlacesAutocompleteSearch from 'components/places/PlacesAutocompleteSearch.react';
 import {loadPlaceFromDetails} from 'actions/CustomerSelectedPlaceActions';
 import {useDispatch} from 'stores/hooks/CustomerStoreHooks';
+import * as ROUTES from 'constants/Routes';
+import queryString from 'query-string';
 
 const useStyles = makeStyles({
   top: {
@@ -40,15 +42,26 @@ export default function PlacesAutocompletePage(): React.Node {
     setSessiontoken(sessiontoken);
   }
 
+  const onLoadPlaceComplete = useCallback(
+    (place) => {
+      history.replace({
+        pathname: ROUTES.CREATE_TWO,
+        search: queryString.stringify({
+          initial_lat: place.geometry.location.lat,
+          initial_lon: place.geometry.location.lng,
+        }),
+      });
+    },
+    [history],
+  );
+
   const onSelectPlace = useCallback(
     (place_id) => {
       if (sessiontoken) {
-        dispatch(loadPlaceFromDetails(place_id, sessiontoken));
-        // Not desirable, but way easier
-        history.goBack();
+        dispatch(loadPlaceFromDetails(place_id, sessiontoken, onLoadPlaceComplete));
       }
     },
-    [dispatch, sessiontoken, history],
+    [dispatch, sessiontoken, onLoadPlaceComplete],
   );
 
   return (
