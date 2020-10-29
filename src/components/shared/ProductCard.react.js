@@ -7,7 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
 import {Typography, Paper, Chip} from '@material-ui/core';
-import {WatchLater, Place} from '@material-ui/icons';
+import {Schedule, LocationOnOutlined} from '@material-ui/icons';
 import RoundedImage from './RoundedImage.react';
 
 const useStyles = makeStyles({
@@ -50,6 +50,9 @@ const useStyles = makeStyles({
     margin: '0 0 -10px 8px',
     alignSelf: 'flex-end',
   },
+  icon: {
+    margin: '0 3px 0 0',
+  },
 });
 
 type Props = {
@@ -89,12 +92,12 @@ function ProductCard({product}: Props): Node {
         </FlexLayout>
         <FlexLayout className={classes.content} direction="vertical">
           <FlexLayout align="center">
-            <WatchLater style={{fontSize: 19}} />
+            <Schedule style={{fontSize: 19}} className={classes.icon} />
             <Typography variant="subtitle2">{product.time}</Typography>
           </FlexLayout>
           <FlexLayout align="center" justify="between" className={classes.fullRow}>
             <FlexLayout>
-              <Place style={{fontSize: 19}} />
+              <LocationOnOutlined style={{fontSize: 19}} className={classes.icon} />
               <Typography variant="subtitle2">{product.location}</Typography>
             </FlexLayout>
             <Typography variant="body1" color="primary" align="right">

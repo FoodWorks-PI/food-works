@@ -1,4 +1,4 @@
-// flow-typed signature: 0c48be385f3dc0a4a3ae31b3c5e1f644
+// flow-typed signature: cfa1aefc9e7f27753c67f625b05ab1ec
 // flow-typed version: c6154227d1/@material-ui/icons_v4.x.x/flow_>=v0.104.x
 
 /*
