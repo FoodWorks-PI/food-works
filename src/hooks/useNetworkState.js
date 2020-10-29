@@ -24,7 +24,7 @@ function useNetworkState(): [boolean, ?Date] {
       window.removeEventListener('online', listenOnline);
       window.removeEventListener('offline', listenOffline);
     };
-  }, []);
+  }, [setOnline, setConnectedAt]);
 
   return [isOnline, connectedAt];
 }
