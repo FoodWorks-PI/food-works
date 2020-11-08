@@ -11,6 +11,8 @@ import AccountList from 'components/account/AccountList.react';
 
 import {Typography} from '@material-ui/core';
 
+import {gql, useQuery} from '@apollo/client';
+
 const useStyles = makeStyles({
   root: {
     width: '100%',
@@ -21,15 +23,27 @@ const useStyles = makeStyles({
   },
 });
 
+const GET_CURRENT_CUSTOMER_NAME = gql`
+  query GetCurrentCustomer {
+    getCurrentCustomer {
+      name
+    }
+  }
+`;
+
 function AccountPage(): Node {
   const classes = useStyles();
+  const {data, loading, error} = useQuery(GET_CURRENT_CUSTOMER_NAME);
+
+  if (loading) return 'Cargando...';
+  if (error) return 'Error...';
 
   return (
     <FlexLayout direction="vertical" className={classes.root} align="center">
       <Typography variant="h4" gutterBottom align="center">
-        Juan Perez
+        {data.getCurrentCustomer.name}
       </Typography>
-      <TextLink to="/customer/account/profile">Editar mi cuenta</TextLink>
+      <TextLink to="/customer/protected/account/profile">Editar mi cuenta</TextLink>
       <AccountList />
     </FlexLayout>
   );

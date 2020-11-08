@@ -16,6 +16,8 @@ import * as ROUTES from 'constants/Routes';
 import Onboarding from 'components/onboarding/Onboarding.react';
 import KratosNoSessionRenderer from 'components/shared/KratosNoSessionRenderer.react';
 import PlacesAutocompletePage from 'components/places/PlacesAutocompletePage.react';
+import AccountPage from 'components/account/AccountPage.react';
+import AccountDetails from 'components/account/AccountDetails.react';
 
 function App(): React.Node {
   return (
@@ -45,6 +47,12 @@ function App(): React.Node {
                 </Route>
                 <Route exact path={ROUTES.AUTOCOMPLETE_SEARCH}>
                   <PlacesAutocompletePage />
+                </Route>
+                <Route exact path={ROUTES.ACCOUNT}>
+                  <AccountPage />
+                </Route>
+                <Route exact path={ROUTES.ACCOUNT_DETAILS}>
+                  <AccountDetails />
                 </Route>
               </Switch>
             </Router>
