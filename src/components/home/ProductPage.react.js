@@ -5,8 +5,9 @@ import type {Node} from 'react';
 import React, {useState} from 'react';
 
 import {makeStyles} from '@material-ui/core/styles';
-import {Typography, Paper, Chip} from '@material-ui/core';
-import {Schedule} from '@material-ui/icons';
+import {Typography, Paper, Chip, IconButton} from '@material-ui/core';
+import {Schedule, ArrowBack} from '@material-ui/icons';
+import {useHistory} from 'react-router-dom';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
 import RoundedImage from 'components/shared/RoundedImage.react';
@@ -101,6 +102,7 @@ const product = {
 function ProductPage(): Node {
   const classes = useStyles({product});
   const [open, setOpen] = useState(false);
+  const history = useHistory();
 
   function openDialog() {
     setOpen(true);
@@ -108,11 +110,24 @@ function ProductPage(): Node {
   function closeDialog() {
     setOpen(false);
   }
+  function goBack() {
+    history.goBack();
+  }
 
   return (
     <FlexLayout direction="vertical" className={classes.root}>
       <Paper elevation={3} className={classes.fullWidth} square>
         <FlexLayout className={classes.img} direction="vertical">
+          <FlexLayout className={classes.fullWidth}>
+            <IconButton
+              aria-label="back"
+              style={{color: 'white'}}
+              size="medium"
+              onClick={goBack}
+            >
+              <ArrowBack />
+            </IconButton>
+          </FlexLayout>
           <FlexLayout className={classes.titleRow} justify="between">
             <RoundedImage source={product.logo} className={classes.logo} />
             <Typography variant="h5" className={classes.title}>
