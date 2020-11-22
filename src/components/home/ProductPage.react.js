@@ -92,7 +92,7 @@ const product = {
   time: '10:00 a 12:00',
   description: 'Ricas donas de diferentes sabores',
   tags: ['dessert', 'donuts', 'cakes'],
-  price: 75.0,
+  cost: 75.0,
   img: donuts,
   logo: dLogo,
   name: 'Donas Surtidas',
@@ -145,7 +145,7 @@ function ProductPage(): Node {
               <Typography variant="body2">{product.time}</Typography>
             </FlexLayout>
             <Typography variant="body2" color="secondary">
-              <strong>${product.price}</strong>
+              <strong>${product.cost}</strong>
             </Typography>
           </FlexLayout>
         </FlexLayout>
