@@ -1,9 +1,7 @@
 // @flow strict
 
-import type {Node} from 'react';
-
-import React from 'react';
-import TopBar from 'components/home/TopBar.react';
+import * as React from 'react';
+import TopBar from 'components/home/AddressTopBar.react';
 import FlexLayout from 'components/shared/FlexLayout.react';
 import {makeStyles} from '@material-ui/core/styles';
 import ProductRow from './ProductRow.react';
@@ -11,18 +9,18 @@ import ProductRow from './ProductRow.react';
 import donuts from 'assets/donuts.jpg';
 import dLogo from 'assets/ddlogo.jpg';
 
-const useStyles = makeStyles({
-  root: {
+const useStyles = makeStyles((theme) => ({
+  body: {
     width: '100%',
     overflowY: 'scroll',
     whiteSpace: 'nowrap',
-    padding: '8px',
-    marginTop: '15%',
-    marginBottom: '15%',
+    marginTop: theme.mixins.toolbar.minHeight,
+    marginBottom: theme.mixins.toolbar.minHeight,
+    padding: 8,
   },
-});
+}));
 
-function HomePage(): Node {
+function HomePage(): React.Node {
   const classes = useStyles();
   const list = [
     {
@@ -56,8 +54,8 @@ function HomePage(): Node {
 
   return (
     <>
-      <TopBar>Mi Dirección</TopBar>
-      <FlexLayout direction="vertical" className={classes.root}>
+      <TopBar />
+      <FlexLayout direction="vertical" className={classes.body}>
         <ProductRow productList={list}>Recomendado para ti</ProductRow>
         <ProductRow productList={list}>Para más tarde</ProductRow>
         <ProductRow productList={list}>Para mañana</ProductRow>

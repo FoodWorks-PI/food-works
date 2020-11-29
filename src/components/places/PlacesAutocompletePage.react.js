@@ -44,8 +44,11 @@ export default function PlacesAutocompletePage(): React.Node {
 
   const onLoadPlaceComplete = useCallback(
     (place) => {
+      const update =
+        new URLSearchParams(history.location.search).get('update') === 'true';
+
       history.replace({
-        pathname: ROUTES.CREATE_TWO,
+        pathname: update ? ROUTES.PROTECTED_ADDRESS_UPDATE : ROUTES.CREATE_TWO,
         search: queryString.stringify({
           initial_lat: place.geometry.location.lat,
           initial_lon: place.geometry.location.lng,
