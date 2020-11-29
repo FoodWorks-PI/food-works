@@ -16,17 +16,10 @@ import * as ROUTES from 'constants/Routes';
 import Onboarding from 'components/onboarding/Onboarding.react';
 import KratosNoSessionRenderer from 'components/shared/KratosNoSessionRenderer.react';
 import PlacesAutocompletePage from 'components/places/PlacesAutocompletePage.react';
-import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
-import HomePage from 'components/home/HomePage.react';
 import AccountPage from 'components/account/AccountPage.react';
 import AccountDetails from 'components/account/AccountDetails.react';
-import AccountFavorites from 'components/account/AccountFavorites.react';
-import AccountPayments from 'components/account/AccountPayments.react';
-import CardDetail from 'components/payment/CardDetail.react';
-
-function Search() {
-  return <h1>BUSCAR</h1>;
-}
+import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
+import HomePage from 'components/home/HomePage.react';
 
 function App(): React.Node {
   return (
@@ -58,54 +51,11 @@ function App(): React.Node {
                 <Route exact path={ROUTES.AUTOCOMPLETE_SEARCH}>
                   <PlacesAutocompletePage />
                 </Route>
-                <Route exact path={ROUTES.PROTECTED_SEARCH}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <Search />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
+                <Route exact path={ROUTES.ACCOUNT}>
+                  <AccountPage />
                 </Route>
-                <Route exact path={ROUTES.PROTECTED_ORDERS}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <Search />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
-                </Route>
-                <Route exact path={ROUTES.PROTECTED_ACCOUNT}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <AccountPage />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
-                </Route>
-                <Route exact path={ROUTES.PROTECTED_ACCOUNT_DETAILS}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <AccountDetails />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
-                </Route>
-                <Route exact path={ROUTES.PROTECTED_ACCOUNT_FAVORITES}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <AccountFavorites />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
-                </Route>
-                <Route exact path={ROUTES.PROTECTED_ACCOUNT_PAYMENTS}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <AccountPayments />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
-                </Route>
-                <Route exact path={ROUTES.PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE}>
-                  {/* TODO: Write a more user friendly fallback */}
-                  <UserExistsRenderer fallback={<p>Loading...</p>}>
-                    <CardDetail />
-                    <BottomNavigationBar />
-                  </UserExistsRenderer>
+                <Route exact path={ROUTES.ACCOUNT_DETAILS}>
+                  <AccountDetails />
                 </Route>
               </Switch>
             </Router>

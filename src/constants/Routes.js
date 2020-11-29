@@ -17,3 +17,5 @@ export const PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE_ME =
   '/customer/protected/account/payments/my-card';
 export const PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE_ADD =
   '/customer/protected/account/payments/add';
+export const ACCOUNT = '/customer/protected/account';
+export const ACCOUNT_DETAILS = '/customer/protected/account/profile';
