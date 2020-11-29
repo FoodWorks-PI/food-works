@@ -4,12 +4,11 @@ import type {Node} from 'react';
 
 import React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-
 import FlexLayout from 'components/shared/FlexLayout.react';
 import TextLink from 'components/shared/TextLink.react';
 import AccountList from 'components/account/AccountList.react';
-
 import {Typography} from '@material-ui/core';
+import * as ROUTES from 'constants/Routes';
 
 const useStyles = makeStyles({
   root: {
@@ -29,7 +28,7 @@ function AccountPage(): Node {
       <Typography variant="h4" gutterBottom align="center">
         Juan Perez
       </Typography>
-      <TextLink to="/customer/account/profile">Editar mi cuenta</TextLink>
+      <TextLink to={ROUTES.PROTECTED_ACCOUNT_DETAILS}>Editar mi cuenta</TextLink>
       <AccountList />
     </FlexLayout>
   );

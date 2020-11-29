@@ -24,6 +24,7 @@ import {
   AddOutlined,
 } from '@material-ui/icons';
 import {Link} from 'react-router-dom';
+import * as ROUTES from 'constants/Routes';
 
 const useStyles = makeStyles({
   root: {
@@ -64,7 +65,11 @@ function AccountPayments(): Node {
         </Typography>
       </FlexLayout>
       <List className={classes.list}>
-        <ListItem button to="/customer/account/payments/my-card" component={Link}>
+        <ListItem
+          button
+          to={ROUTES.PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE_ME}
+          component={Link}
+        >
           <ListItemIcon>
             <CreditCardOutlined />
           </ListItemIcon>
@@ -74,7 +79,11 @@ function AccountPayments(): Node {
           </ListItemSecondaryAction>
         </ListItem>
         <Divider />
-        <ListItem button to="/customer/account/payments/add" component={Link}>
+        <ListItem
+          button
+          to={ROUTES.PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE_ADD}
+          component={Link}
+        >
           <ListItemIcon>
             <AddOutlined />
           </ListItemIcon>

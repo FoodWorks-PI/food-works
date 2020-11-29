@@ -38,7 +38,7 @@ function AccountDetails(): Node {
   const classes = useStyles();
   const [open, setOpen] = useState<boolean>(false);
   const [editField, setField] = useState<string>('');
-  const [userData, setUserData] = useState(initialState);
+  const [userData] = useState(initialState);
   const history = useHistory();
 
   function openDialog(fieldName: string) {

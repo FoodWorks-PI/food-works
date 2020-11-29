@@ -7,6 +7,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {BottomNavigation, BottomNavigationAction} from '@material-ui/core';
 import {Home, Search, Receipt, Person} from '@material-ui/icons';
 import {Link} from 'react-router-dom';
+import * as ROUTES from 'constants/Routes';
 
 const useStyles = makeStyles({
   root: {
@@ -35,25 +36,25 @@ function BottomNavigationBar(): Node {
         label="Inicio"
         color="primary"
         component={Link}
-        to="/customer/home"
+        to={ROUTES.PROTECTED_ROOT}
         icon={<Home />}
       />
       <BottomNavigationAction
         label="Buscar"
         component={Link}
-        to="/customer/search"
+        to={ROUTES.PROTECTED_SEARCH}
         icon={<Search />}
       />
       <BottomNavigationAction
-        label="Ordenes"
+        label="Órdenes"
         component={Link}
-        to="/customer/orders"
+        to={ROUTES.PROTECTED_ORDERS}
         icon={<Receipt />}
       />
       <BottomNavigationAction
-        label="Mi Cuenta"
+        label="Cuenta"
         component={Link}
-        to="/customer/account"
+        to={ROUTES.PROTECTED_ACCOUNT}
         icon={<Person />}
       />
     </BottomNavigation>
