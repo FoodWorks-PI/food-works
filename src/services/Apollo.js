@@ -1,8 +1,9 @@
 // @flow strict
 
 import {ApolloClient, InMemoryCache} from '@apollo/client';
+import BASE_URL from '../services/config';
 
 export const client = new ApolloClient({
-  uri: 'https://127.0.0.1:4455/api/graphql',
+  uri: `${BASE_URL}/api/graphql`,
   cache: new InMemoryCache(),
 });
