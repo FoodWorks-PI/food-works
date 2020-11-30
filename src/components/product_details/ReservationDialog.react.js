@@ -47,7 +47,7 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 type Props = {
   open: boolean,
-  onClose: (e: SyntheticMouseEvent<>, quantity?: number) => mixed,
+  onClose: (e: SyntheticMouseEvent<>, reason?: ?string, quantity?: number) => mixed,
   product: Product,
 };
 
@@ -103,7 +103,7 @@ export default function ReservationDialog({open, onClose, product}: Props): Reac
         </FlexLayout>
       </DialogContent>
       <DialogActions style={{justifyContent: 'center'}}>
-        <Button onClick={(e) => onClose(e, quantity)}>Pagar</Button>
+        <Button onClick={(e) => onClose(e, null, quantity)}>Pagar</Button>
       </DialogActions>
     </Dialog>
   );

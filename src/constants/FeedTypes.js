@@ -31,6 +31,14 @@ export type Product = {
   __typename?: FeedCardType,
 };
 
+export type RestaurantOwner = {
+  ID: number,
+  name?: string,
+  lastName?: string,
+  email?: string,
+  phone?: string,
+};
+
 export type Restaurant = {
   ID: number,
   name?: string,
@@ -40,6 +48,7 @@ export type Restaurant = {
   address?: Address,
   tags?: Array<string>,
   products?: Array<Product>,
+  restaurantOwner?: RestaurantOwner,
   __typename?: FeedCardType,
 };
 

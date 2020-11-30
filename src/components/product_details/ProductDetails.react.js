@@ -136,7 +136,7 @@ export default function ProductDetails(props: Props): React.Node {
   let restaurantLogo = nullthrows(props.product.restaurant?.image);
   restaurantLogo = restaurantLogo !== '' ? restaurantLogo : dLogo;
 
-  function onPay(_, quantity) {
+  function onPay(_, _ignore, quantity) {
     setFalse();
     if (quantity != null) {
       createOrder({

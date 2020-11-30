@@ -1,17 +1,18 @@
 // @flow strict
 
-import type {Node} from 'react';
+import type {Restaurant} from 'constants/FeedTypes';
 
-import React from 'react';
+import * as React from 'react';
 import {useHistory} from 'react-router-dom';
-
 import {makeStyles} from '@material-ui/core/styles';
 import {Typography, Paper, IconButton, Chip, List, ListItem} from '@material-ui/core';
 import {ArrowBack, LocationOnOutlined, PhoneAndroidOutlined} from '@material-ui/icons';
-
+import ButtonBase from '@material-ui/core/ButtonBase';
 import FlexLayout from 'components/shared/FlexLayout.react';
+import nullthrows from 'utils/nullthrows';
 
 import donuts from 'assets/donuts.jpg';
+import dLogo from 'assets/ddlogo.jpg';
 
 const useStyles = makeStyles({
   root: {
@@ -19,15 +20,19 @@ const useStyles = makeStyles({
     height: '100vh',
     overflowY: 'scroll',
   },
-  img: ({restaurant}) => ({
-    width: '100%',
-    height: '150px',
-    objectFit: 'cover',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: '100%',
-    backgroundImage: `url(${restaurant.img})`,
-  }),
+  img: ({restaurant}: Props) => {
+    let restaurantImage = nullthrows(restaurant.image);
+    restaurantImage = restaurantImage !== '' ? restaurantImage : dLogo;
+    return {
+      width: '100%',
+      height: 160,
+      objectFit: 'cover',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: '100%',
+      backgroundImage: `url(${restaurantImage})`,
+    };
+  },
   fullWidth: {
     width: '100%',
   },
@@ -69,73 +74,29 @@ const useStyles = makeStyles({
   productContent: {
     flex: '0 0 75.000%',
   },
+  productRoot: {
+    width: '100%',
+  },
 });
 
-const restaurant = {
-  name: 'Donas Pedro',
-  img: donuts,
-  tags: ['dessert', 'donuts', 'cakes'],
-  description: 'Donas de muchos sabores y más postres',
-  address: 'Lomas de los Perros #13',
-  phone: '12345678',
-  products: [
-    {
-      id: 0,
-      name: 'ITEM',
-      description:
-        'Deliciosas donas de chocolate hechas con la receta especial de Dunkin’ Donuts',
-      active: true,
-      cost: 50.0,
-      img: donuts,
-    },
-    {
-      id: 1,
-      name: 'ITEM2',
-      description: 'Donas de chocolate',
-      active: true,
-      cost: 48.0,
-      img: donuts,
-    },
-    {
-      id: 2,
-      name: 'ITEM3',
-      description: 'Donas de chocolate',
-      active: true,
-      cost: 75.0,
-      img: donuts,
-    },
-    {
-      id: 3,
-      name: 'ITEM3',
-      description: 'Donas de chocolate',
-      active: true,
-      cost: 75.0,
-      img: donuts,
-    },
-    {
-      id: 4,
-      name: 'ITEM3',
-      description: 'Donas de chocolate',
-      active: true,
-      cost: 75.0,
-      img: donuts,
-    },
-  ],
+function truncateText(text: string): string {
+  if (text.length >= 55) {
+    return text.substring(0, 50) + '...';
+  } else {
+    return text;
+  }
+}
+
+type Props = {
+  restaurant: Restaurant,
 };
 
-function RestaurantPage(): Node {
+export default function RestaurantDetails({restaurant}: Props): React.Node {
   const classes = useStyles({restaurant});
   const history = useHistory();
 
-  function goBack() {
-    history.goBack();
-  }
-  function truncateText(text: string): string {
-    if (text.length >= 55) {
-      return text.substring(0, 50) + '...';
-    } else {
-      return text;
-    }
+  function onProductClick(id) {
+    history.push(`/customer/protected/products/${id}`);
   }
 
   return (
@@ -147,37 +108,37 @@ function RestaurantPage(): Node {
               aria-label="back"
               style={{color: 'white'}}
               size="medium"
-              onClick={goBack}
+              onClick={history.goBack}
             >
               <ArrowBack />
             </IconButton>
           </FlexLayout>
           <FlexLayout className={classes.titleRow} justify="between">
             <Typography variant="h5" className={classes.title}>
-              {restaurant.name}
+              {nullthrows(restaurant.name)}
             </Typography>
           </FlexLayout>
         </FlexLayout>
         <FlexLayout direction="vertical" wrap="wrap" className={classes.headerBox}>
           <Typography variant="body1" gutterBottom>
-            {restaurant.description}
+            {nullthrows(restaurant.description)}
           </Typography>
           <FlexLayout>
             <LocationOnOutlined className={classes.icon} />
             <Typography variant="subtitle2" gutterBottom>
-              {restaurant.address}
+              {nullthrows(restaurant.address?.streetLine)}
             </Typography>
           </FlexLayout>
           <FlexLayout>
             <PhoneAndroidOutlined className={classes.icon} />
             <Typography variant="subtitle2" gutterBottom>
-              {restaurant.phone}
+              {nullthrows(restaurant.restaurantOwner?.phone)}
             </Typography>
           </FlexLayout>
           <FlexLayout className={classes.chipRow}>
-            {restaurant.tags.map((tag, ndx) => (
+            {nullthrows(restaurant.tags).map((tag) => (
               <Chip
-                key={ndx}
+                key={tag}
                 size="small"
                 color="primary"
                 clickable={false}
@@ -189,31 +150,38 @@ function RestaurantPage(): Node {
         </FlexLayout>
       </Paper>
       <List className={classes.fullWidth}>
-        {restaurant.products.map((product) => (
-          <ListItem key={product.id}>
-            <FlexLayout align="center">
-              <FlexLayout direction="vertical" className={classes.productContent}>
-                <Typography variant="h6">{product.name}</Typography>
-                <Typography variant="body2">
-                  {truncateText(product.description)}
-                </Typography>
-                <Typography variant="subtitle2">
-                  <strong>${product.cost}</strong>
-                </Typography>
-              </FlexLayout>
-              <FlexLayout className={classes.productImgContainer} direction="vertical">
-                <img
-                  src={product.img}
-                  alt={product.name}
-                  className={classes.productImg}
-                />
-              </FlexLayout>
-            </FlexLayout>
-          </ListItem>
-        ))}
+        {nullthrows(restaurant.products).map((product) => {
+          let productImage = nullthrows(product.image);
+          productImage = productImage !== '' ? productImage : donuts;
+          return (
+            <ListItem key={product.ID}>
+              <ButtonBase onClick={() => onProductClick(product.ID)}>
+                <FlexLayout className={classes.productRoot} align="center">
+                  <FlexLayout direction="vertical" className={classes.productContent}>
+                    <Typography variant="h6">{nullthrows(product.name)}</Typography>
+                    <Typography variant="body2">
+                      {truncateText(nullthrows(product.description))}
+                    </Typography>
+                    <Typography variant="subtitle2">
+                      <strong>${nullthrows(product.cost)}</strong>
+                    </Typography>
+                  </FlexLayout>
+                  <FlexLayout
+                    className={classes.productImgContainer}
+                    direction="vertical"
+                  >
+                    <img
+                      src={productImage}
+                      alt={nullthrows(product.name)}
+                      className={classes.productImg}
+                    />
+                  </FlexLayout>
+                </FlexLayout>
+              </ButtonBase>
+            </ListItem>
+          );
+        })}
       </List>
     </FlexLayout>
   );
 }
-
-export default RestaurantPage;

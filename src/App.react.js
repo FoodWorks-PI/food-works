@@ -23,6 +23,7 @@ import HomePage from 'components/home/HomePage.react';
 import AccountAddressUpdate from 'components/account/AccountAddressUpdate.react';
 import SearchPage from 'components/search/SearchPage.react';
 import ProductPage from 'components/product_details/ProductPage.react';
+import RestaurantPage from 'components/restaurant_details/RestaurantPage.react';
 
 function App(): React.Node {
   return (
@@ -74,6 +75,11 @@ function App(): React.Node {
                 <Route exact path={ROUTES.PROTECTED_PRODUCT_DETAILS}>
                   <UserExistsRenderer fallback={<p>Loading...</p>}>
                     <ProductPage />
+                  </UserExistsRenderer>
+                </Route>
+                <Route exact path={ROUTES.PROTECTED_RESTAURANT_DETAILS}>
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <RestaurantPage />
                   </UserExistsRenderer>
                 </Route>
               </Switch>
