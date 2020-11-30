@@ -95,11 +95,11 @@ export default function ProductCard({product}: Props): React.Node {
           <FlexLayout align="center">
             <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
             <Typography variant="subtitle2" style={{marginRight: 4}}>{`${nullthrows(
-              product.distance,
+              product.distance?.toFixed(2),
             )} km`}</Typography>
             <StarBorderIcon style={{fontSize: 20}} className={classes.icon} />
             <Typography variant="subtitle2">
-              {nullthrows(product.averageRating)}
+              {nullthrows(product.averageRating?.toFixed(2))}
             </Typography>
           </FlexLayout>
           <Typography variant="body1" color="primary" align="right">

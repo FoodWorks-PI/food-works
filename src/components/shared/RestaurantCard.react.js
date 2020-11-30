@@ -88,7 +88,7 @@ export default function RestaurantCard({restaurant}: Props): React.Node {
         <FlexLayout className={classes.metrics}>
           <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
           <Typography variant="subtitle2">{`${nullthrows(
-            restaurant.distance,
+            restaurant.distance?.toFixed(2),
           )} km`}</Typography>
         </FlexLayout>
       </FlexLayout>
