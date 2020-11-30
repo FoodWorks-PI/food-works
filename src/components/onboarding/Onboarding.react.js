@@ -11,9 +11,9 @@ import FlexLayout from 'components/shared/FlexLayout.react';
 import burger from 'assets/onboarding/burger.png';
 import fries from 'assets/onboarding/fries.png';
 import salad from 'assets/onboarding/salad.png';
+import BASE_URL from 'services/config';
 
-const SIGN_UP_URL =
-  'https://127.0.0.1:4455/auth/registration?clientApp=https://127.0.0.1:4455/customer/protected';
+const SIGN_UP_URL = `${BASE_URL}/auth/registration?clientApp=${BASE_URL}/customer/protected`;
 
 type Step = {|
   title: string,
