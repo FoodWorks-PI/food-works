@@ -33,6 +33,7 @@ const GET_FEED = gql`
           restaurant {
             image
           }
+          averageRating
         }
         ... on Restaurant {
           ID

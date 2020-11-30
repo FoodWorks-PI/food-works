@@ -1,6 +1,6 @@
 // @flow strict
 
-import type {Product} from 'constants/FeedTypes';
+import type {Restaurant} from 'constants/FeedTypes';
 
 import * as React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
@@ -8,11 +8,8 @@ import {makeStyles} from '@material-ui/core/styles';
 import FlexLayout from 'components/shared/FlexLayout.react';
 import {Typography, Paper} from '@material-ui/core';
 import {LocationOnOutlined} from '@material-ui/icons';
-import RoundedImage from './RoundedImage.react';
 import nullthrows from 'utils/nullthrows';
-import donuts from 'assets/donuts.jpg';
 import dLogo from 'assets/ddlogo.jpg';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 
 const useStyles = makeStyles({
   root: {
@@ -21,8 +18,8 @@ const useStyles = makeStyles({
     marginRight: 8,
   },
   img: (props: Props) => {
-    let restaurantImage = nullthrows(props.product.restaurant?.image);
-    restaurantImage = restaurantImage !== '' ? restaurantImage : donuts;
+    let restaurantImage = nullthrows(props.restaurant.image);
+    restaurantImage = restaurantImage !== '' ? restaurantImage : dLogo;
     return {
       width: '100%',
       height: 96,
@@ -51,7 +48,6 @@ const useStyles = makeStyles({
   },
   title: {
     fontWeight: 500,
-    maxWidth: '75%',
     whiteSpace: 'nowrap',
     overflow: 'hidden',
     textOverflow: 'ellipsis',
@@ -66,16 +62,17 @@ const useStyles = makeStyles({
     height: '100%',
     backgroundColor: 'rgba(0, 0, 0, 0.12)',
   },
+  metrics: {
+    padding: 4,
+  },
 });
 
 type Props = {
-  product: Product,
+  restaurant: Restaurant,
 };
 
-export default function ProductCard({product}: Props): React.Node {
-  const classes = useStyles({product});
-  let logo = nullthrows(product.image);
-  logo = logo !== '' ? logo : dLogo;
+export default function RestaurantCard({restaurant}: Props): React.Node {
+  const classes = useStyles({restaurant});
 
   return (
     <Paper elevation={3} className={classes.root}>
@@ -83,28 +80,16 @@ export default function ProductCard({product}: Props): React.Node {
         <FlexLayout className={classes.img} direction="vertical">
           <div className={classes.imageOpacity} />
         </FlexLayout>
-        <FlexLayout className={classes.titleRow} align="center">
-          <div className={classes.logo}>
-            <RoundedImage source={logo} size="small" />
-          </div>
+        <div className={classes.titleRow}>
           <Typography variant="body1" className={classes.title}>
-            {nullthrows(product.name)}
+            {nullthrows(restaurant.name)}
           </Typography>
-        </FlexLayout>
-        <FlexLayout align="center" justify="between" className={classes.fullRow}>
-          <FlexLayout align="center">
-            <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
-            <Typography variant="subtitle2" style={{marginRight: 4}}>{`${nullthrows(
-              product.distance,
-            )} km`}</Typography>
-            <StarBorderIcon style={{fontSize: 20}} className={classes.icon} />
-            <Typography variant="subtitle2">
-              {nullthrows(product.averageRating)}
-            </Typography>
-          </FlexLayout>
-          <Typography variant="body1" color="primary" align="right">
-            ${nullthrows(product.cost)}
-          </Typography>
+        </div>
+        <FlexLayout className={classes.metrics}>
+          <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
+          <Typography variant="subtitle2">{`${nullthrows(
+            restaurant.distance,
+          )} km`}</Typography>
         </FlexLayout>
       </FlexLayout>
     </Paper>
