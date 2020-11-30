@@ -16,6 +16,13 @@ export type Rating = {
   comment?: string,
 };
 
+export type OrderState =
+  | 'PENDING_PAYMENT'
+  | 'COMPLETED'
+  | 'PAID'
+  | 'CANCELLED'
+  | 'ERROR';
+
 export type Product = {
   ID: number,
   name?: string,
@@ -57,4 +64,12 @@ export type FeedCard = Product | Restaurant;
 export type FeedItem = {
   name: string,
   cards: Array<FeedCard>,
+};
+
+export type Order = {
+  ID: number,
+  product?: Product,
+  orderState?: OrderState,
+  quantity?: number,
+  updatedAt?: number,
 };

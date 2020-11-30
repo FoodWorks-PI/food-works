@@ -24,6 +24,7 @@ import AccountAddressUpdate from 'components/account/AccountAddressUpdate.react'
 import SearchPage from 'components/search/SearchPage.react';
 import ProductPage from 'components/product_details/ProductPage.react';
 import RestaurantPage from 'components/restaurant_details/RestaurantPage.react';
+import OrdersPage from 'components/orders/OrdersPage.react';
 
 function App(): React.Node {
   return (
@@ -55,11 +56,16 @@ function App(): React.Node {
                 <Route exact path={ROUTES.AUTOCOMPLETE_SEARCH}>
                   <PlacesAutocompletePage />
                 </Route>
-                <Route exact path={ROUTES.ACCOUNT}>
-                  <AccountPage />
+                <Route exact path={ROUTES.PROTECTED_ACCOUNT}>
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <AccountPage />
+                    <BottomNavigationBar />
+                  </UserExistsRenderer>
                 </Route>
                 <Route exact path={ROUTES.ACCOUNT_DETAILS}>
-                  <AccountDetails />
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <AccountDetails />
+                  </UserExistsRenderer>
                 </Route>
                 <Route exact path={ROUTES.PROTECTED_ADDRESS_UPDATE}>
                   <UserExistsRenderer fallback={<p>Loading...</p>}>
@@ -80,6 +86,12 @@ function App(): React.Node {
                 <Route exact path={ROUTES.PROTECTED_RESTAURANT_DETAILS}>
                   <UserExistsRenderer fallback={<p>Loading...</p>}>
                     <RestaurantPage />
+                  </UserExistsRenderer>
+                </Route>
+                <Route exact path={ROUTES.PROTECTED_ORDERS}>
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <OrdersPage />
+                    <BottomNavigationBar />
                   </UserExistsRenderer>
                 </Route>
               </Switch>
