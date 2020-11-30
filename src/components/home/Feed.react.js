@@ -31,6 +31,7 @@ const GET_FEED = gql`
           distance
           image
           restaurant {
+            ID
             image
           }
           averageRating

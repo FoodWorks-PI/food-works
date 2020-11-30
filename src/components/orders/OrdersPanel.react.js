@@ -1,8 +1,8 @@
 // @flow strict
 
-import type {Node} from 'react';
+import type {Order} from 'constants/FeedTypes';
 
-import React from 'react';
+import * as React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
@@ -17,41 +17,24 @@ const useStyles = makeStyles({
   },
 });
 
-type Order = {
-  id: number,
-  state: string,
-  product: string,
-  quantity: number,
-  restaurant: string,
-};
-
 type Props = {
-  value: number,
-  index: number,
-  orders: Order[],
+  orders: Array<Order>,
+  onCancel: (id: number) => void,
+  onRate: (order: Order) => void,
 };
 
-function OrdersActivePanel({value, index, orders}: Props): Node {
+function OrdersPanel({orders, onCancel, onRate}: Props): React.Node {
   const classes = useStyles();
   if (orders.length === 0) {
     return <OrdersNotice> No tienes ordenes</OrdersNotice>;
   }
   return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`full-width-tabpanel-${index}`}
-      aria-labelledby={`full-width-tab-${index}`}
-    >
-      {value === index && (
-        <FlexLayout className={classes.root} direction="vertical">
-          {orders.map((order) => (
-            <OrderCard order={order} key={order.id} />
-          ))}
-        </FlexLayout>
-      )}
-    </div>
+    <FlexLayout className={classes.root} direction="vertical">
+      {orders.map((order) => (
+        <OrderCard order={order} key={order.ID} onCancel={onCancel} onRate={onRate} />
+      ))}
+    </FlexLayout>
   );
 }
 
-export default OrdersActivePanel;
+export default OrdersPanel;

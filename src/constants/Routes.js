@@ -20,3 +20,5 @@ export const PROTECTED_ACCOUNT_PAYMENTS_CARDTYPE_ADD =
   '/customer/protected/account/payments/add';
 export const ACCOUNT = '/customer/protected/account';
 export const ACCOUNT_DETAILS = '/customer/protected/account/profile';
+export const PROTECTED_PRODUCT_DETAILS = '/customer/protected/products/:id';
+export const PROTECTED_RESTAURANT_DETAILS = '/customer/protected/restaurants/:id';

@@ -1,48 +1,34 @@
 // @flow strict
 
-import type {Node} from 'react';
-
-import React, {useState} from 'react';
+import * as React from 'react';
+import {useState} from 'react';
 
 import {makeStyles} from '@material-ui/core/styles';
 import {Paper, Tabs, Tab, AppBar} from '@material-ui/core';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
-import OrdersPanel from 'components/orders/OrdersPanel.react';
+import OrdersContainer from 'components/orders/OrdersContainer.react';
 
-import SwipeableViews from 'react-swipeable-views';
-
-const useStyles = makeStyles({
-  root: {
+const useStyles = makeStyles((theme) => ({
+  content: {
     width: '100%',
-    padding: '8px',
-    marginBottom: '15%',
+    marginTop: theme.mixins.toolbar.minHeight,
+    marginBottom: theme.mixins.toolbar.minHeight,
+    padding: 8,
   },
-  fullWidth: {
-    width: '100%',
-  },
-});
+}));
 
-const orders = [
-  {id: 0, state: 'Activo', product: 'Tacos', quantity: 2, restaurant: 'TACOS'},
-  {id: 1, state: 'Activo', product: 'Tacos', quantity: 2, restaurant: 'TACOS'},
-  {id: 2, state: 'Activo', product: 'Tacos', quantity: 2, restaurant: 'TACOS'},
-];
-
-function OrdersPage(): Node {
+function OrdersPage(): React.Node {
   const classes = useStyles();
   const [value, setValue] = useState(0);
 
   function handleTabChange(e, newValue) {
     setValue(newValue);
   }
-  function handleIndexChange(index) {
-    setValue(index);
-  }
 
   return (
     <>
-      <AppBar position="static">
+      <AppBar position="fixed">
         <Paper square>
           <Tabs
             value={value}
@@ -57,16 +43,8 @@ function OrdersPage(): Node {
           </Tabs>
         </Paper>
       </AppBar>
-      <FlexLayout className={classes.root}>
-        <SwipeableViews
-          enableMouseEvents
-          index={value}
-          onChangeIndex={handleIndexChange}
-          className={classes.fullWidth}
-        >
-          <OrdersPanel value={value} index={0} orders={orders} />
-          <OrdersPanel value={value} index={1} orders={[]} />
-        </SwipeableViews>
+      <FlexLayout className={classes.content}>
+        <OrdersContainer />
       </FlexLayout>
     </>
   );

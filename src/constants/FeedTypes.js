@@ -16,6 +16,13 @@ export type Rating = {
   comment?: string,
 };
 
+export type OrderState =
+  | 'PENDING_PAYMENT'
+  | 'COMPLETED'
+  | 'PAID'
+  | 'CANCELLED'
+  | 'ERROR';
+
 export type Product = {
   ID: number,
   name?: string,
@@ -31,6 +38,14 @@ export type Product = {
   __typename?: FeedCardType,
 };
 
+export type RestaurantOwner = {
+  ID: number,
+  name?: string,
+  lastName?: string,
+  email?: string,
+  phone?: string,
+};
+
 export type Restaurant = {
   ID: number,
   name?: string,
@@ -40,6 +55,7 @@ export type Restaurant = {
   address?: Address,
   tags?: Array<string>,
   products?: Array<Product>,
+  restaurantOwner?: RestaurantOwner,
   __typename?: FeedCardType,
 };
 
@@ -48,4 +64,12 @@ export type FeedCard = Product | Restaurant;
 export type FeedItem = {
   name: string,
   cards: Array<FeedCard>,
+};
+
+export type Order = {
+  ID: number,
+  product?: Product,
+  orderState?: OrderState,
+  quantity?: number,
+  updatedAt?: number,
 };

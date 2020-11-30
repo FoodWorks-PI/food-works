@@ -32,6 +32,11 @@ export const theme = createMuiTheme({
     fontFamily: 'Montserrat',
   },
   overrides: {
+    MuiChip: {
+      label: {
+        color: 'white',
+      },
+    },
     MuiCssBaseline: {
       '@global': {
         '@font-face': [montserrat],

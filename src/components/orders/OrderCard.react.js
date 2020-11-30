@@ -1,16 +1,15 @@
 // @flow strict
 
-import type {Node} from 'react';
+import type {Order, OrderState} from 'constants/FeedTypes';
 
-import React from 'react';
+import * as React from 'react';
 
 import {makeStyles} from '@material-ui/core/styles';
 import {Paper, Typography, Chip} from '@material-ui/core';
 import {InfoOutlined} from '@material-ui/icons';
-
 import FlexLayout from 'components/shared/FlexLayout.react';
 import Button from 'components/shared/Button.react';
-
+import nullthrows from 'utils/nullthrows';
 import donuts from 'assets/donuts.jpg';
 
 const useStyles = makeStyles((theme) => ({
@@ -18,13 +17,17 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
     margin: '8px 0',
   },
-  img: {
-    width: '100%',
-    height: '120px',
-    backgroundRepeat: 'no-repeat',
-    backgroundPosition: 'center',
-    backgroundSize: 'cover',
-    backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${donuts})`,
+  img: (props: Props) => {
+    let productImage = nullthrows(props.order.product?.image);
+    productImage = productImage !== '' ? productImage : donuts;
+    return {
+      width: '100%',
+      height: '120px',
+      backgroundRepeat: 'no-repeat',
+      backgroundPosition: 'center',
+      backgroundSize: 'cover',
+      backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${productImage})`,
+    };
   },
   title: {
     color: 'white',
@@ -43,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     width: '100%',
   },
   button: {
+    fontSize: 12,
+  },
+  buttonCancel: {
     backgroundColor: theme.palette.error.main,
     fontSize: 12,
   },
@@ -51,24 +57,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-type Order = {
-  id: number,
-  state: string,
-  product: string,
-  quantity: number,
-  restaurant: string,
-};
-
 type Props = {
   order: Order,
+  onCancel: (id: number) => void,
+  onRate: (order: Order) => void,
 };
 
-function OrderCard({order}: Props): Node {
-  const classes = useStyles();
+const stateToName: {[OrderState]: string} = {
+  COMPLETED: 'Completado',
+  PAID: 'Pagado',
+  PENDING_PAYMENT: 'Pago pendiente',
+  CANCELLED: 'Cancelado',
+  ERROR: 'Error',
+};
 
-  function handleCancel() {
-    console.log('cancel');
-  }
+function OrderCard({order, onCancel, onRate}: Props): React.Node {
+  const classes = useStyles({order});
 
   return (
     <Paper className={classes.root} square elevation={3}>
@@ -80,13 +84,15 @@ function OrderCard({order}: Props): Node {
           className={classes.img}
         >
           <Typography variant="h5" className={classes.title}>
-            {order.restaurant}
+            {nullthrows(order.product?.restaurant?.name)}
           </Typography>
         </FlexLayout>
         <FlexLayout direction="vertical" className={classes.content}>
           <FlexLayout align="center" className={classes.row}>
             <InfoOutlined className={classes.icon} />
-            <Typography variant="h6">{order.state}</Typography>
+            <Typography variant="h6">
+              {stateToName[nullthrows(order.orderState)]}
+            </Typography>
           </FlexLayout>
           <FlexLayout align="center" className={classes.row}>
             <Chip
@@ -96,13 +102,25 @@ function OrderCard({order}: Props): Node {
               size="small"
               className={classes.icon}
             />
-            <Typography variant="body1">{order.product}</Typography>
+            <Typography variant="body1">{nullthrows(order.product?.name)}</Typography>
           </FlexLayout>
           <FlexLayout align="center" className={classes.fullWidth} justify="between">
-            <Typography variant="h6">TOTAL: $50</Typography>
-            <Button className={classes.button} onClick={handleCancel}>
-              Cancelar
-            </Button>
+            <Typography variant="body2">
+              Total: ${nullthrows(order.product?.cost) * nullthrows(order.quantity)}
+            </Typography>
+            {order.orderState === 'PENDING_PAYMENT' || order.orderState === 'PAID' ? (
+              <Button
+                className={classes.buttonCancel}
+                onClick={() => onCancel(order.ID)}
+              >
+                Cancelar
+              </Button>
+            ) : null}
+            {order.orderState === 'COMPLETED' && (
+              <Button className={classes.button} onClick={() => onRate(order)}>
+                Calificar
+              </Button>
+            )}
           </FlexLayout>
         </FlexLayout>
       </FlexLayout>
