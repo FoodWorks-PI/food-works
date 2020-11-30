@@ -1,10 +1,9 @@
 // @flow strict
 
-import type {Node} from 'react';
 import type {Restaurant} from 'constants/FeedTypes';
 
-import React from 'react';
-import {List, Typography, ListItem, Paper} from '@material-ui/core';
+import * as React from 'react';
+import {List, Typography} from '@material-ui/core';
 import {makeStyles} from '@material-ui/core/styles';
 
 import SearchRestaurantCard from 'components/search/SearchRestaurantCard.react';
@@ -28,7 +27,7 @@ type Props = {
   restaurants: Restaurant[],
 };
 
-function SearchRestaurantsList({restaurants}: Props): Node {
+function SearchRestaurantsList({restaurants}: Props): React.Node {
   const classes = useStyles();
 
   return (

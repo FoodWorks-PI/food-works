@@ -16,7 +16,7 @@ const useStyles = makeStyles({
     width: '100%',
   },
   card: {
-    margin: '3px 0',
+    margin: '6px 0',
   },
   name: {
     maxWidth: '80%',

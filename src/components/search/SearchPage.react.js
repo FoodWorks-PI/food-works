@@ -1,12 +1,11 @@
 // @flow strict
 
-import type {Node} from 'react';
-import type {Product, Restaurant} from 'constants/FeedTypes';
-
-import React, {useState} from 'react';
-import {List, Typography, ListItem, Paper} from '@material-ui/core';
+import * as React from 'react';
+import {useState} from 'react';
+import Typography from '@material-ui/core/Typography';
 import {makeStyles} from '@material-ui/core/styles';
-import {Fastfood} from '@material-ui/icons';
+import Fastfood from '@material-ui/icons/Fastfood';
+import Paper from '@material-ui/core/Paper';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
 import TextInput from 'components/shared/TextInput.react';
@@ -33,39 +32,42 @@ const SEARCH_GLOBAL = gql`
   }
 `;
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     width: '100%',
     overflowY: 'scroll',
     whiteSpace: 'nowrap',
-    padding: '8px',
-    marginTop: '10%',
-    marginBottom: '15%',
+    marginBottom: theme.mixins.toolbar.minHeight,
   },
   searchRow: {
     width: '100%',
+    position: 'fixed',
+    padding: 16,
+    zIndex: theme.zIndex.appBar,
   },
-  initialCntainer: {
+  container: {
     width: '100%',
-    height: '50vh',
+    marginTop: 88,
+    paddingLeft: 16,
+    paddingRight: 16,
+    paddingTop: 8,
+  },
+  initialContainer: {
+    width: '100%',
+    marginTop: 32,
   },
   icon: {
     fontSize: 64,
   },
-});
+  input: {
+    marginRight: 8,
+  },
+}));
 
-function SearchPage(): Node {
+function SearchPage(): React.Node {
   const classes = useStyles();
   const [searchString, setString] = useState('');
   const [searchGlobal, {data, loading, error}] = useLazyQuery(SEARCH_GLOBAL);
-
-  if (loading) {
-    return <Typography>Loading...</Typography>;
-  }
-  if (!loading && error != null) {
-    console.log(error);
-    return <Typography>Error...</Typography>;
-  }
 
   function handleChange(e: SyntheticInputEvent<>) {
     const value: string = e.target.value;
@@ -74,7 +76,6 @@ function SearchPage(): Node {
 
   function getSearch() {
     if (searchString === '') {
-      window.alert('Escribe Algo');
       return;
     } else {
       searchGlobal({
@@ -92,33 +93,42 @@ function SearchPage(): Node {
 
   return (
     <FlexLayout className={classes.root} direction="vertical">
-      <FlexLayout align="end" className={classes.searchRow}>
-        <TextInput
-          label="Buscar producto o restaurante"
-          placeholder={'Tacos de canasta'}
-          value={searchString}
-          onChange={handleChange}
-        />
-        <Button onClick={getSearch}>Buscar</Button>
-      </FlexLayout>
-      {!data && (
-        <FlexLayout
-          direction="vertical"
-          justify="center"
-          align="center"
-          className={classes.initialCntainer}
-        >
-          <Fastfood className={classes.icon} color="primary" />
-          <Typography variant="h5">¿Qué hay para cenar?</Typography>
-          <Typography variant="subtitle2">Busca productos y restaurantes</Typography>
+      <Paper elevation={1} className={classes.searchRow}>
+        <FlexLayout align="end">
+          <TextInput
+            label="Buscar producto o restaurante"
+            placeholder="Tacos de canasta"
+            value={searchString}
+            className={classes.input}
+            onChange={handleChange}
+          />
+          <Button onClick={getSearch}>Buscar</Button>
         </FlexLayout>
-      )}
-      {data && (
-        <>
-          <ProductList products={data.searchProductsAndRestaurants.products} />
-          <RestaurantList restaurants={data.searchProductsAndRestaurants.restaurants} />
-        </>
-      )}
+      </Paper>
+      <div className={classes.container}>
+        {!data && !loading && !error && (
+          <FlexLayout
+            direction="vertical"
+            justify="center"
+            align="center"
+            className={classes.initialContainer}
+          >
+            <Fastfood className={classes.icon} color="primary" />
+            <Typography variant="h5">¿Qué hay para cenar?</Typography>
+            <Typography variant="subtitle2">Busca productos y restaurantes</Typography>
+          </FlexLayout>
+        )}
+        {loading && <Typography>Loading...</Typography>}
+        {!loading && error && <Typography>Error...</Typography>}
+        {data && (
+          <>
+            <ProductList products={data.searchProductsAndRestaurants.products} />
+            <RestaurantList
+              restaurants={data.searchProductsAndRestaurants.restaurants}
+            />
+          </>
+        )}
+      </div>
     </FlexLayout>
   );
 }
