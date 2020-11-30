@@ -15,6 +15,7 @@ import dLogo from 'assets/ddlogo.jpg';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import {useHistory} from 'react-router-dom';
+import {BASE_MEDIA_URL} from 'services/config';
 
 const useStyles = makeStyles({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles({
   },
   img: (props: Props) => {
     let productImage = nullthrows(props.product.image);
-    productImage = productImage !== '' ? productImage : donuts;
+    productImage = productImage !== '' ? `${BASE_MEDIA_URL}/${productImage}` : donuts;
     return {
       width: '100%',
       height: 96,
@@ -82,7 +83,7 @@ export default function ProductCard({product}: Props): React.Node {
   const history = useHistory();
 
   let restaurantLogo = nullthrows(product.restaurant?.image);
-  restaurantLogo = restaurantLogo !== '' ? restaurantLogo : dLogo;
+  restaurantLogo = restaurantLogo !== '' ? `${BASE_MEDIA_URL}/${restaurantLogo}` : dLogo;
 
   function onClick() {
     history.push(`/customer/protected/products/${product.ID}`);

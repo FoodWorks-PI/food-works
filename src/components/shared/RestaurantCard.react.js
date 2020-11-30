@@ -12,6 +12,7 @@ import nullthrows from 'utils/nullthrows';
 import dLogo from 'assets/ddlogo.jpg';
 import ButtonBase from '@material-ui/core/ButtonBase';
 import {useHistory} from 'react-router-dom';
+import {BASE_MEDIA_URL} from 'services/config';
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +25,8 @@ const useStyles = makeStyles({
   },
   img: (props: Props) => {
     let restaurantImage = nullthrows(props.restaurant.image);
-    restaurantImage = restaurantImage !== '' ? restaurantImage : dLogo;
+    restaurantImage =
+      restaurantImage !== '' ? `${BASE_MEDIA_URL}/${restaurantImage}` : dLogo;
     return {
       width: '100%',
       height: 96,
