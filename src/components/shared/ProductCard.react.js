@@ -13,12 +13,17 @@ import nullthrows from 'utils/nullthrows';
 import donuts from 'assets/donuts.jpg';
 import dLogo from 'assets/ddlogo.jpg';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 256,
     marginLeft: 8,
     marginRight: 8,
+    '& > *': {
+      width: '100%',
+    },
   },
   img: (props: Props) => {
     let restaurantImage = nullthrows(props.product.restaurant?.image);
@@ -74,39 +79,47 @@ type Props = {
 
 export default function ProductCard({product}: Props): React.Node {
   const classes = useStyles({product});
+  const history = useHistory();
+
   let logo = nullthrows(product.image);
   logo = logo !== '' ? logo : dLogo;
 
+  function onClick() {
+    history.push(`/customer/protected/products/${product.ID}`);
+  }
+
   return (
-    <Paper elevation={3} className={classes.root}>
-      <FlexLayout direction="vertical" justify="center">
-        <FlexLayout className={classes.img} direction="vertical">
-          <div className={classes.imageOpacity} />
-        </FlexLayout>
-        <FlexLayout className={classes.titleRow} align="center">
-          <div className={classes.logo}>
-            <RoundedImage source={logo} size="small" />
-          </div>
-          <Typography variant="body1" className={classes.title}>
-            {nullthrows(product.name)}
-          </Typography>
-        </FlexLayout>
-        <FlexLayout align="center" justify="between" className={classes.fullRow}>
-          <FlexLayout align="center">
-            <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
-            <Typography variant="subtitle2" style={{marginRight: 4}}>{`${nullthrows(
-              product.distance?.toFixed(2),
-            )} km`}</Typography>
-            <StarBorderIcon style={{fontSize: 20}} className={classes.icon} />
-            <Typography variant="subtitle2">
-              {nullthrows(product.averageRating?.toFixed(2))}
+    <ButtonBase className={classes.root} onClick={onClick}>
+      <Paper elevation={3}>
+        <FlexLayout direction="vertical" justify="center">
+          <FlexLayout className={classes.img} direction="vertical">
+            <div className={classes.imageOpacity} />
+          </FlexLayout>
+          <FlexLayout className={classes.titleRow} align="center">
+            <div className={classes.logo}>
+              <RoundedImage source={logo} size="small" />
+            </div>
+            <Typography variant="body1" className={classes.title}>
+              {nullthrows(product.name)}
             </Typography>
           </FlexLayout>
-          <Typography variant="body1" color="primary" align="right">
-            ${nullthrows(product.cost)}
-          </Typography>
+          <FlexLayout align="center" justify="between" className={classes.fullRow}>
+            <FlexLayout align="center">
+              <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
+              <Typography variant="subtitle2" style={{marginRight: 4}}>{`${nullthrows(
+                product.distance?.toFixed(2),
+              )} km`}</Typography>
+              <StarBorderIcon style={{fontSize: 20}} className={classes.icon} />
+              <Typography variant="subtitle2">
+                {nullthrows(product.averageRating?.toFixed(2))}
+              </Typography>
+            </FlexLayout>
+            <Typography variant="body1" color="primary" align="right">
+              ${nullthrows(product.cost)}
+            </Typography>
+          </FlexLayout>
         </FlexLayout>
-      </FlexLayout>
-    </Paper>
+      </Paper>
+    </ButtonBase>
   );
 }

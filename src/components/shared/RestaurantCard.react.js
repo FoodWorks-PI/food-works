@@ -10,12 +10,17 @@ import {Typography, Paper} from '@material-ui/core';
 import {LocationOnOutlined} from '@material-ui/icons';
 import nullthrows from 'utils/nullthrows';
 import dLogo from 'assets/ddlogo.jpg';
+import ButtonBase from '@material-ui/core/ButtonBase';
+import {useHistory} from 'react-router-dom';
 
 const useStyles = makeStyles({
   root: {
     minWidth: 256,
     marginLeft: 8,
     marginRight: 8,
+    '& > *': {
+      width: '100%',
+    },
   },
   img: (props: Props) => {
     let restaurantImage = nullthrows(props.restaurant.image);
@@ -73,25 +78,32 @@ type Props = {
 
 export default function RestaurantCard({restaurant}: Props): React.Node {
   const classes = useStyles({restaurant});
+  const history = useHistory();
+
+  function onClick() {
+    history.push(`/customer/protected/restaurants/${restaurant.ID}`);
+  }
 
   return (
-    <Paper elevation={3} className={classes.root}>
-      <FlexLayout direction="vertical" justify="center">
-        <FlexLayout className={classes.img} direction="vertical">
-          <div className={classes.imageOpacity} />
+    <ButtonBase className={classes.root} onClick={onClick}>
+      <Paper elevation={3}>
+        <FlexLayout direction="vertical" justify="center">
+          <FlexLayout className={classes.img} direction="vertical">
+            <div className={classes.imageOpacity} />
+          </FlexLayout>
+          <div className={classes.titleRow}>
+            <Typography variant="body1" className={classes.title}>
+              {nullthrows(restaurant.name)}
+            </Typography>
+          </div>
+          <FlexLayout className={classes.metrics}>
+            <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
+            <Typography variant="subtitle2">{`${nullthrows(
+              restaurant.distance?.toFixed(2),
+            )} km`}</Typography>
+          </FlexLayout>
         </FlexLayout>
-        <div className={classes.titleRow}>
-          <Typography variant="body1" className={classes.title}>
-            {nullthrows(restaurant.name)}
-          </Typography>
-        </div>
-        <FlexLayout className={classes.metrics}>
-          <LocationOnOutlined style={{fontSize: 20}} className={classes.icon} />
-          <Typography variant="subtitle2">{`${nullthrows(
-            restaurant.distance?.toFixed(2),
-          )} km`}</Typography>
-        </FlexLayout>
-      </FlexLayout>
-    </Paper>
+      </Paper>
+    </ButtonBase>
   );
 }
