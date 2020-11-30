@@ -1,3 +1,4 @@
+/* eslint-disable no-use-before-define */
 // @flow strict
 
 export type FeedCardType = 'Restaurant' | 'Product';
@@ -26,6 +27,7 @@ export type Product = {
   ratings?: Array<Rating>,
   distance?: number,
   image?: string,
+  restaurant?: Restaurant,
   __typename?: FeedCardType,
 };
 
