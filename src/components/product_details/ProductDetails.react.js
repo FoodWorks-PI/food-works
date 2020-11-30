@@ -20,6 +20,10 @@ import LocationOnOutlined from '@material-ui/icons/LocationOnOutlined';
 import Button from 'components/shared/Button.react';
 import useBoolean from 'hooks/useBoolean';
 import ReservationDialog from 'components/product_details/ReservationDialog.react';
+import * as ROUTES from 'constants/Routes';
+import {gql, useMutation} from '@apollo/client';
+import Backdrop from '@material-ui/core/Backdrop';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -101,7 +105,17 @@ const useStyles = makeStyles((theme) => ({
   buttonReady: {
     width: '80%',
   },
+  backdrop: {
+    zIndex: theme.zIndex.drawer + 1,
+    color: '#fff',
+  },
 }));
+
+const CREATE_ORDER = gql`
+  mutation CreateOrder($input: RegisterOrderInput!) {
+    createOrder(input: $input)
+  }
+`;
 
 type Props = {
   product: Product,
@@ -111,9 +125,30 @@ export default function ProductDetails(props: Props): React.Node {
   const classes = useStyles(props);
   const history = useHistory();
   const {value: open, setFalse, setTrue} = useBoolean(false);
+  const [createOrder, {loading}] = useMutation(CREATE_ORDER, {
+    onCompleted() {
+      history.replace({
+        pathname: ROUTES.PROTECTED_ORDERS,
+      });
+    },
+  });
 
   let restaurantLogo = nullthrows(props.product.restaurant?.image);
   restaurantLogo = restaurantLogo !== '' ? restaurantLogo : dLogo;
+
+  function onPay(_, quantity) {
+    setFalse();
+    if (quantity != null) {
+      createOrder({
+        variables: {
+          input: {
+            productID: props.product.ID,
+            quantity,
+          },
+        },
+      });
+    }
+  }
 
   return (
     <>
@@ -187,7 +222,10 @@ export default function ProductDetails(props: Props): React.Node {
           </FlexLayout>
         </Paper>
       </FlexLayout>
-      <ReservationDialog open={open} onClose={setFalse} product={props.product} />
+      <ReservationDialog open={open} onClose={onPay} product={props.product} />
+      <Backdrop className={classes.backdrop} open={loading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
     </>
   );
 }
