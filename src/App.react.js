@@ -22,6 +22,7 @@ import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
 import HomePage from 'components/home/HomePage.react';
 import AccountAddressUpdate from 'components/account/AccountAddressUpdate.react';
 import SearchPage from 'components/search/SearchPage.react';
+import ProductPage from 'components/product_details/ProductPage.react';
 
 function App(): React.Node {
   return (
@@ -68,6 +69,11 @@ function App(): React.Node {
                   <UserExistsRenderer fallback={<p>Loading...</p>}>
                     <SearchPage />
                     <BottomNavigationBar />
+                  </UserExistsRenderer>
+                </Route>
+                <Route exact path={ROUTES.PROTECTED_PRODUCT_DETAILS}>
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <ProductPage />
                   </UserExistsRenderer>
                 </Route>
               </Switch>

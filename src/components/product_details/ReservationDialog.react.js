@@ -1,8 +1,9 @@
 // @flow strict
 
-import type {Node} from 'react';
+import type {Product} from 'constants/FeedTypes';
 
-import React, {forwardRef, useState} from 'react';
+import * as React from 'react';
+import {forwardRef, useState} from 'react';
 
 import {
   Dialog,
@@ -16,6 +17,7 @@ import {makeStyles} from '@material-ui/core/styles';
 
 import Button from 'components/shared/Button.react';
 import FlexLayout from 'components/shared/FlexLayout.react';
+import nullthrows from 'utils/nullthrows';
 
 const useStyles = makeStyles({
   root: {
@@ -23,7 +25,6 @@ const useStyles = makeStyles({
     bottom: 0,
     margin: '0 !important',
     width: '100%',
-    height: '45%',
   },
   title: {
     textAlign: 'center',
@@ -46,10 +47,11 @@ const Transition = forwardRef(function Transition(props, ref) {
 
 type Props = {
   open: boolean,
-  closeDialog: (e: SyntheticMouseEvent<>) => mixed,
+  onClose: (e: SyntheticMouseEvent<>, quantity?: number) => mixed,
+  product: Product,
 };
 
-function ReservationDialog({open, closeDialog}: Props): Node {
+export default function ReservationDialog({open, onClose, product}: Props): React.Node {
   const classes = useStyles();
   const [quantity, setQuantity] = useState(1);
 
@@ -69,17 +71,17 @@ function ReservationDialog({open, closeDialog}: Props): Node {
       open={open}
       TransitionComponent={Transition}
       fullWidth
-      onClose={closeDialog}
+      onClose={onClose}
       classes={{
         paper: classes.root,
       }}
       aria-labelledby="dialog-buy-product"
     >
       <DialogTitle id="dialog-buy-product" className={classes.title}>
-        Donas Surtidas
+        {nullthrows(product.name)}
       </DialogTitle>
       <Typography variant="subtitle2" align="center">
-        Donas de Pedro
+        {nullthrows(product.restaurant?.name)}
       </Typography>
       <DialogContent>
         <FlexLayout direction="vertical" align="center">
@@ -95,14 +97,14 @@ function ReservationDialog({open, closeDialog}: Props): Node {
               +
             </Button>
           </FlexLayout>
-          <Typography variant="subtitle1">Total: ${quantity * 75}MXN</Typography>
+          <Typography variant="subtitle1">
+            Total: ${quantity * nullthrows(product.cost)}MXN
+          </Typography>
         </FlexLayout>
       </DialogContent>
       <DialogActions style={{justifyContent: 'center'}}>
-        <Button onClick={closeDialog}>Comprar</Button>
+        <Button onClick={(e) => onClose(e, quantity)}>Pagar</Button>
       </DialogActions>
     </Dialog>
   );
 }
-
-export default ReservationDialog;

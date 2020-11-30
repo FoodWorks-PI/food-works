@@ -26,8 +26,8 @@ const useStyles = makeStyles({
     },
   },
   img: (props: Props) => {
-    let restaurantImage = nullthrows(props.product.restaurant?.image);
-    restaurantImage = restaurantImage !== '' ? restaurantImage : donuts;
+    let productImage = nullthrows(props.product.image);
+    productImage = productImage !== '' ? productImage : donuts;
     return {
       width: '100%',
       height: 96,
@@ -35,7 +35,7 @@ const useStyles = makeStyles({
       backgroundRepeat: 'no-repeat',
       backgroundPosition: 'center',
       backgroundSize: '100%',
-      backgroundImage: `url(${restaurantImage})`,
+      backgroundImage: `url(${productImage})`,
       position: 'relative',
     };
   },
@@ -81,8 +81,8 @@ export default function ProductCard({product}: Props): React.Node {
   const classes = useStyles({product});
   const history = useHistory();
 
-  let logo = nullthrows(product.image);
-  logo = logo !== '' ? logo : dLogo;
+  let restaurantLogo = nullthrows(product.restaurant?.image);
+  restaurantLogo = restaurantLogo !== '' ? restaurantLogo : dLogo;
 
   function onClick() {
     history.push(`/customer/protected/products/${product.ID}`);
@@ -97,7 +97,7 @@ export default function ProductCard({product}: Props): React.Node {
           </FlexLayout>
           <FlexLayout className={classes.titleRow} align="center">
             <div className={classes.logo}>
-              <RoundedImage source={logo} size="small" />
+              <RoundedImage source={restaurantLogo} size="small" />
             </div>
             <Typography variant="body1" className={classes.title}>
               {nullthrows(product.name)}
@@ -118,9 +118,6 @@ export default function ProductCard({product}: Props): React.Node {
               ${nullthrows(product.cost)}
             </Typography>
           </FlexLayout>
-          <Typography variant="body1" color="primary" align="right">
-            ${nullthrows(product.cost)}
-          </Typography>
         </FlexLayout>
       </Paper>
     </ButtonBase>
