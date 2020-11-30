@@ -21,6 +21,7 @@ import AccountDetails from 'components/account/AccountDetails.react';
 import BottomNavigationBar from 'components/shared/BottomNavigationBar.react';
 import HomePage from 'components/home/HomePage.react';
 import AccountAddressUpdate from 'components/account/AccountAddressUpdate.react';
+import SearchPage from 'components/search/SearchPage.react';
 
 function App(): React.Node {
   return (
@@ -61,6 +62,12 @@ function App(): React.Node {
                 <Route exact path={ROUTES.PROTECTED_ADDRESS_UPDATE}>
                   <UserExistsRenderer fallback={<p>Loading...</p>}>
                     <AccountAddressUpdate />
+                  </UserExistsRenderer>
+                </Route>
+                <Route exact path={ROUTES.PROTECTED_SEARCH}>
+                  <UserExistsRenderer fallback={<p>Loading...</p>}>
+                    <SearchPage />
+                    <BottomNavigationBar />
                   </UserExistsRenderer>
                 </Route>
               </Switch>
