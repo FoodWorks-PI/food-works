@@ -12,11 +12,10 @@ import {Typography} from '@material-ui/core';
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    height: '33%',
     overflowX: 'auto',
-    padding: '5px 0 5px 0',
-    margin: '10px 0 10px 0',
+    marginBottom: 8,
     whiteSpace: 'nowrap',
+    padding: 4,
   },
 });
 
@@ -39,7 +38,7 @@ function ProductRow({productList, children}: Props): Node {
   const classes = useStyles();
   return (
     <>
-      <Typography variant="h5" className={classes.title}>
+      <Typography variant="h6" gutterBottom>
         {children}
       </Typography>
       <FlexLayout direction="horizontal" align="center" className={classes.root}>

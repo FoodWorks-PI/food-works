@@ -6,6 +6,7 @@ export const CREATE_TWO = '/customer/protected/create/two';
 export const PROTECTED_ROOT = '/customer/protected';
 export const PUBLIC_ROOT = '/customer';
 export const PROTECTED_SEARCH = '/customer/protected/search';
+export const PROTECTED_ADDRESS_UPDATE = '/customer/protected/address-update';
 export const PROTECTED_ORDERS = '/customer/protected/orders';
 export const PROTECTED_ACCOUNT = '/customer/protected/account';
 export const PROTECTED_ACCOUNT_DETAILS = '/customer/protected/account/details';

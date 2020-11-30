@@ -1,8 +1,6 @@
 // @flow strict
 
-import type {Node} from 'react';
-
-import React from 'react';
+import * as React from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 
 import FlexLayout from 'components/shared/FlexLayout.react';
@@ -12,12 +10,13 @@ import RoundedImage from './RoundedImage.react';
 
 const useStyles = makeStyles({
   root: {
-    flex: '0 0 75.000%',
-    margin: '0px 5px 0px 5px',
+    minWidth: 256,
+    marginLeft: 8,
+    marginRight: 8,
   },
   img: (props) => ({
     width: '100%',
-    height: '90px',
+    height: 88,
     objectFit: 'cover',
     backgroundRepeat: 'no-repeat',
     backgroundPosition: 'center',
@@ -67,11 +66,11 @@ type Props = {
   },
 };
 
-function ProductCard({product}: Props): Node {
+function ProductCard({product}: Props): React.Node {
   const classes = useStyles({product});
 
   return (
-    <Paper elevation={3} className={classes.root} square>
+    <Paper elevation={3} className={classes.root}>
       <FlexLayout direction="vertical" justify="center">
         <FlexLayout className={classes.img} direction="vertical">
           <FlexLayout className={classes.chipRow} justify="end">

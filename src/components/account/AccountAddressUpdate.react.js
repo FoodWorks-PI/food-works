@@ -18,10 +18,11 @@ import Button from 'components/shared/Button.react';
 import {gql, useMutation} from '@apollo/client';
 import {useHistory, useLocation} from 'react-router-dom';
 import * as ROUTES from 'constants/Routes';
+import queryString from 'query-string';
 
-const CREATE_USER = gql`
-  mutation CreateUser($input: RegisterCustomerInput!) {
-    createCustomerProfile(input: $input)
+const UPDATE_USER_ADDRESS = gql`
+  mutation UpdateUserAddress($input: RegisterAddressInput!) {
+    updateCustomerAddress(input: $input)
   }
 `;
 
@@ -86,23 +87,25 @@ const useStyles = makeStyles({
   },
 });
 
-export default function UserLocationStep(): React.Node {
+export default function AccountAddressUpdate(): React.Node {
   const history = useHistory();
   const location = useLocation();
   const selectedPlaceState = useMappedState((state) => state.selectedPlace);
-  const customerCreationState = useMappedState((state) => state.customerCreation);
   const dispatch = useDispatch();
   const classes = useStyles();
   const [map, setMap] = useState(null);
   const [userPosition] = useInitialGeoPosition();
-  const [createUser, {loading: loadingCreation}] = useMutation(CREATE_USER, {
-    onCompleted() {
-      // TODO: Replace entire history stack
-      history.replace({
-        pathname: ROUTES.PROTECTED_ROOT,
-      });
+  const [updateUserAddress, {loading: loadingUpdate}] = useMutation(
+    UPDATE_USER_ADDRESS,
+    {
+      onCompleted() {
+        // TODO: Replace entire history stack
+        history.replace({
+          pathname: ROUTES.PROTECTED_ROOT,
+        });
+      },
     },
-  });
+  );
 
   const initialLat = new URLSearchParams(location.search).get('initial_lat');
   const initialLon = new URLSearchParams(location.search).get('initial_lon');
@@ -137,25 +140,17 @@ export default function UserLocationStep(): React.Node {
   }, [map, dispatch]);
 
   function onReadyClick() {
-    if (customerCreationState.creation == null) {
-      return;
-    }
     if (
       !selectedPlaceState.isFetching &&
       !selectedPlaceState.hasError &&
       selectedPlaceState.place
     ) {
-      createUser({
+      updateUserAddress({
         variables: {
           input: {
-            name: customerCreationState.creation.name,
-            lastName: customerCreationState.creation.lastName,
-            phone: customerCreationState.creation.phoneNumber,
-            address: {
-              latitude: selectedPlaceState.place.geometry.location.lat,
-              longitude: selectedPlaceState.place.geometry.location.lng,
-              streetLine: selectedPlaceState.place.formatted_address,
-            },
+            latitude: selectedPlaceState.place.geometry.location.lat,
+            longitude: selectedPlaceState.place.geometry.location.lng,
+            streetLine: selectedPlaceState.place.formatted_address,
           },
         },
       });
@@ -165,6 +160,9 @@ export default function UserLocationStep(): React.Node {
   function onAutocomplete() {
     history.push({
       pathname: ROUTES.AUTOCOMPLETE_SEARCH,
+      search: queryString.stringify({
+        update: true,
+      }),
     });
   }
 
@@ -213,12 +211,12 @@ export default function UserLocationStep(): React.Node {
         </ButtonBase>
         <Button
           className={classes.buttonReady}
-          isDisabled={loadingCreation}
-          isLoading={loadingCreation}
-          isLabelHidden={loadingCreation}
+          isDisabled={loadingUpdate}
+          isLoading={loadingUpdate}
+          isLabelHidden={loadingUpdate}
           onClick={onReadyClick}
         >
-          Continuar
+          Guardar
         </Button>
       </div>
     </FlexLayout>
