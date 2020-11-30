@@ -11,7 +11,7 @@ import * as ROUTES from 'constants/Routes';
 
 const useStyles = makeStyles({
   root: {
-    width: '100vw',
+    width: '100%',
     borderTop: '1px solid #D4D4D4',
     position: 'fixed',
     bottom: 0,
