@@ -6,6 +6,7 @@ import * as React from 'react';
 import FlexLayout from 'components/shared/FlexLayout.react';
 import {makeStyles} from '@material-ui/core/styles';
 import Typography from '@material-ui/core/Typography';
+import FeedCardElement from 'components/home/FeedCardElement.react';
 
 const useStyles = makeStyles({
   root: {
@@ -24,7 +25,7 @@ type Props = {
   feedItem: FeedItem,
 };
 
-export default function FeedItemRow({feedItem}: Props) {
+export default function FeedItemRow({feedItem}: Props): React.Node {
   const classes = useStyles();
   return (
     <FlexLayout direction="vertical" className={classes.root}>
@@ -33,7 +34,7 @@ export default function FeedItemRow({feedItem}: Props) {
       </Typography>
       <FlexLayout direction="horizontal" align="center" className={classes.scroll}>
         {feedItem.cards.map((item) => (
-          <div key={item.ID} />
+          <FeedCardElement key={item.ID} item={item} />
         ))}
       </FlexLayout>
     </FlexLayout>
