@@ -118,6 +118,9 @@ export default function ProductCard({product}: Props): React.Node {
               ${nullthrows(product.cost)}
             </Typography>
           </FlexLayout>
+          <Typography variant="body1" color="primary" align="right">
+            ${nullthrows(product.cost)}
+          </Typography>
         </FlexLayout>
       </Paper>
     </ButtonBase>
