@@ -30,11 +30,16 @@ const GET_FEED = gql`
           cost
           distance
           image
+          restaurant {
+            image
+          }
+          averageRating
         }
         ... on Restaurant {
           ID
           name
           distance
+          image
         }
         __typename
       }
@@ -56,7 +61,7 @@ export default function Feed(): React.Node {
   return (
     <FlexLayout direction="vertical" className={classes.body}>
       {data.getFeed.map((feedItem) => (
-        <FeedItemRow feedItem={feedItem} />
+        <FeedItemRow key={feedItem.name} feedItem={feedItem} />
       ))}
     </FlexLayout>
   );
