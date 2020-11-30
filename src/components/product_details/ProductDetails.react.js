@@ -24,6 +24,7 @@ import * as ROUTES from 'constants/Routes';
 import {gql, useMutation} from '@apollo/client';
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import {BASE_MEDIA_URL} from 'services/config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -35,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   productImageContainer: (props: Props) => {
     let productImage = nullthrows(props.product.image);
-    productImage = productImage !== '' ? productImage : donuts;
+    productImage = productImage !== '' ? `${BASE_MEDIA_URL}/${productImage}` : donuts;
     return {
       width: '100%',
       height: 160,
@@ -134,7 +135,7 @@ export default function ProductDetails(props: Props): React.Node {
   });
 
   let restaurantLogo = nullthrows(props.product.restaurant?.image);
-  restaurantLogo = restaurantLogo !== '' ? restaurantLogo : dLogo;
+  restaurantLogo = restaurantLogo !== '' ? `${BASE_MEDIA_URL}/${restaurantLogo}` : dLogo;
 
   function onPay(_, _ignore, quantity) {
     setFalse();

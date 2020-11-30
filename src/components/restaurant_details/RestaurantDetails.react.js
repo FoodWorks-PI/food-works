@@ -10,7 +10,7 @@ import {ArrowBack, LocationOnOutlined, PhoneAndroidOutlined} from '@material-ui/
 import ButtonBase from '@material-ui/core/ButtonBase';
 import FlexLayout from 'components/shared/FlexLayout.react';
 import nullthrows from 'utils/nullthrows';
-
+import {BASE_MEDIA_URL} from 'services/config';
 import donuts from 'assets/donuts.jpg';
 import dLogo from 'assets/ddlogo.jpg';
 
@@ -22,7 +22,8 @@ const useStyles = makeStyles({
   },
   img: ({restaurant}: Props) => {
     let restaurantImage = nullthrows(restaurant.image);
-    restaurantImage = restaurantImage !== '' ? restaurantImage : dLogo;
+    restaurantImage =
+      restaurantImage !== '' ? `${BASE_MEDIA_URL}/${restaurantImage}` : dLogo;
     return {
       width: '100%',
       height: 160,
@@ -152,7 +153,8 @@ export default function RestaurantDetails({restaurant}: Props): React.Node {
       <List className={classes.fullWidth}>
         {nullthrows(restaurant.products).map((product) => {
           let productImage = nullthrows(product.image);
-          productImage = productImage !== '' ? productImage : donuts;
+          productImage =
+            productImage !== '' ? `${BASE_MEDIA_URL}/${productImage}` : donuts;
           return (
             <ListItem key={product.ID}>
               <ButtonBase onClick={() => onProductClick(product.ID)}>

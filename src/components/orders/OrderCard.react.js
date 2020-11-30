@@ -3,7 +3,6 @@
 import type {Order, OrderState} from 'constants/FeedTypes';
 
 import * as React from 'react';
-
 import {makeStyles} from '@material-ui/core/styles';
 import {Paper, Typography, Chip} from '@material-ui/core';
 import {InfoOutlined} from '@material-ui/icons';
@@ -11,6 +10,7 @@ import FlexLayout from 'components/shared/FlexLayout.react';
 import Button from 'components/shared/Button.react';
 import nullthrows from 'utils/nullthrows';
 import donuts from 'assets/donuts.jpg';
+import {BASE_MEDIA_URL} from 'services/config';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img: (props: Props) => {
     let productImage = nullthrows(props.order.product?.image);
-    productImage = productImage !== '' ? productImage : donuts;
+    productImage = productImage !== '' ? `${BASE_MEDIA_URL}/${productImage}` : donuts;
     return {
       width: '100%',
       height: '120px',
